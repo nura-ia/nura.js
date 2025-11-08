@@ -1,15 +1,41 @@
 name: nura-ci
-on: [push, pull_request]
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
 jobs:
-  build-core:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with: { version: 9 }
-      - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: 'pnpm' }
-      - run: pnpm install
-      - run: pnpm -w run typecheck
-      - run: pnpm -w run build
-      - run: pnpm run smoke
+      - name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@a3252d19f25e9b6dfcd26d96363c7e0b9f9312cb  # v4
+        with:
+          # Mantén la versión que ya usas localmente (ajústala si tu repo la declara distinta)
+          version: 8.15.0
+          run_install: false
+
+      - name: Setup Node
+        uses: actions/setup-node@8f152de45cc393bb48ce5d89d36b731f54556e65  # v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Typecheck
+        run: pnpm -w run typecheck
+
+      - name: Build
+        run: pnpm -w run build
+
+      - name: Smoke
+        run: pnpm run smoke
