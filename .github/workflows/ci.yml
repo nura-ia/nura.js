@@ -10,7 +10,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,19 +18,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm' # solo activa caché; no instala pnpm
+          cache: pnpm
 
-      - name: Install pnpm (Corepack with npm fallback)
+      # 🔧 Asegura Corepack y PNPM 8.15.0 sí o sí
+      - name: Enable Corepack & pin PNPM
         shell: bash
         run: |
           set -euxo pipefail
           node -v
-          corepack enable || true
-          # intenta con Corepack la versión fijada en package.json (8.15.0)
-          corepack prepare pnpm@8.15.0 --activate || npm i -g pnpm@8.15.0
+          npm -v
+          # Instala corepack si el runner no lo trae
+          npm install -g corepack
+          corepack --version || true
+          corepack enable
+          # Activa PNPM 8.15.0 (según tu packageManager)
+          corepack prepare pnpm@8.15.0 --activate || true
+          # Respaldo por si corepack falla
+          command -v pnpm >/dev/null 2>&1 || npm i -g pnpm@8.15.0
           pnpm -v
+          which pnpm || command -v pnpm
 
-      - name: Install deps
+      - name: Install
         run: pnpm install
 
       - name: Typecheck
