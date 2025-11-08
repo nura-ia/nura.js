@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@nura/core": ["../core/dist/index.d.ts"],
+      "@nura/plugin-voice": ["../plugin-voice/dist/index.d.ts"],
+      "@nura/core/seeds/*": ["../core/dist/seeds/*"]
+    }
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@nura/examples",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Example scenarios demonstrating Nura.js usage",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nura-ia/nurajs.git",
+    "directory": "packages/examples"
+  },
+  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/examples",
+  "bugs": {
+    "url": "https://github.com/nura-ia/nurajs/issues"
+  },
+  "scripts": {
+    "build": "echo \"examples build\"",
+    "lint": "eslint . --ext .ts,.tsx,.mts,.cts",
+    "lint:fix": "eslint . --ext .ts,.tsx,.mts,.cts --fix",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck:skip": "echo skipped"
+  },
+  "dependencies": {
+    "@nura/core": "workspace:*",
+    "@nura/plugin-voice": "workspace:*",
+    "@nurajs/intents": "workspace:*",
+    "@nurajs/transport-http": "workspace:*",
+    "@nurajs/client": "workspace:*",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@nura/core": "workspace:*",
+    "@nura/plugin-voice": "workspace:*",
+    "@nurajs/intents": "workspace:*",
+    "@nurajs/transport-http": "workspace:*",
+    "@nurajs/client": "workspace:*"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "nura-vue-demo",
+  "private": true,
+  "scripts": {
+    "build": "echo \"(demo build skipped)\"",
+    "dev": "vite"
+  },
+  "devDependencies": {}
+}

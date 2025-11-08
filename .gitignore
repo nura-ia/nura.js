@@ -1,0 +1,42 @@
+# Node / PNPM / TS / Build
+node_modules/
+.pnpm-store/
+.pnp.*
+pnpm-debug.log*
+*.log
+*.tsbuildinfo
+dist/
+build/
+out/
+.cache/
+.eslintcache
+.turbo/
+coverage/
+.parcel-cache/
+
+# PNPM packs / artefactos locales
+.packs/
+
+# Lockfiles (si quieres repos 100% libs sin lock a nivel root)
+pnpm-lock.yaml
+
+# Editores / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Vite / Next / SvelteKit / VitePress / Typedoc
+.vite/
+.next/
+.svelte-kit/
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+typedoc/
+
+# Changesets (estado temporal de pre-release)
+.changeset/pre.json
+
+# Sandboxes / tmp
+.sandbox/
+tmp/

@@ -1,0 +1,84 @@
+{
+  "name": "@nura/core",
+  "version": "0.1.0",
+  "description": "Core primitives for building AI-friendly interfaces with Nura.js",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nura-ia/nurajs.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/core",
+  "bugs": {
+    "url": "https://github.com/nura-ia/nurajs/issues"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    },
+    "./wake": {
+      "import": "./dist/wake.js",
+      "require": "./dist/wake.cjs",
+      "types": "./dist/wake.d.ts"
+    },
+    "./context": {
+      "import": "./dist/context.js",
+      "require": "./dist/context.cjs",
+      "types": "./dist/context.d.ts"
+    },
+    "./locale": {
+      "import": "./dist/locale.js",
+      "require": "./dist/locale.cjs",
+      "types": "./dist/locale.d.ts"
+    },
+    "./numerals": {
+      "import": "./dist/numerals.js",
+      "require": "./dist/numerals.cjs",
+      "types": "./dist/numerals.d.ts"
+    },
+    "./synonyms": {
+      "import": "./dist/synonyms.js",
+      "require": "./dist/synonyms.cjs",
+      "types": "./dist/synonyms.d.ts"
+    },
+    "./entities": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup --config tsup.config.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "nura",
+    "ai",
+    "semantic",
+    "commands"
+  ],
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.4.0"
+  },
+  "dependencies": {
+    "@nura/plugin-fuzzy": "workspace:*",
+    "tslib": "^2.6.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Nura Dev Team"
+}

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@nura/core": ["../core/dist/index.d.ts"],
+      "@nura/core/*": ["../core/dist/*"],
+      "@nura/plugin-fuzzy": ["../plugin-fuzzy/dist/index.d.ts"],
+      "@nura/plugin-fuzzy/*": ["../plugin-fuzzy/dist/*"]
+    }
+  },
+  "include": ["src"]
+}

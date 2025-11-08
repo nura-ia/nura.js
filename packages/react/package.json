@@ -1,0 +1,55 @@
+{
+  "name": "@nura/react",
+  "version": "0.1.0",
+  "description": "React adapter for Nura.js",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nura-ia/nurajs.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/react",
+  "bugs": {
+    "url": "https://github.com/nura-ia/nurajs/issues"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --treeshake --clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": ["nura", "react", "hooks"],
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "@nura/core": "workspace:*",
+    "@nura/dom": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "react": "^18.3.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.5.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Nura Dev Team"
+}

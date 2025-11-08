@@ -1,0 +1,49 @@
+:root {
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #1d4ed8;
+  --vp-c-brand-3: #1e40af;
+  --vp-c-accent: #facc15;
+  --vp-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --vp-font-family-mono: 'Roboto Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+:root.dark {
+  --vp-c-bg: #0f172a;
+  --vp-c-bg-alt: #111827;
+  --vp-c-text-1: #f8fafc;
+  --vp-c-text-2: #cbd5f5;
+}
+
+.VPNavBarMenuLink:hover,
+.VPButton.brand {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.VPButton.brand:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -12px rgba(37, 99, 235, 0.45);
+}
+
+.VPButton.alt:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px -16px rgba(15, 23, 42, 0.3);
+}
+
+.VPDoc .custom-block a {
+  text-decoration-thickness: 2px;
+}
+
+iframe {
+  border-radius: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

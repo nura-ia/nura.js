@@ -1,0 +1,10 @@
+#nura-lexicon-panel {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+}
+
+#nura-lexicon-panel:empty {
+  display: none;
+}

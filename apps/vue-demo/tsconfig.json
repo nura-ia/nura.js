@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@nura/vue": ["../../packages/vue/dist/index.d.ts"],
+      "@nura/core": ["../../packages/core/src/index.ts"],
+      "@nura/core/*": ["../../packages/core/src/*"],
+      "@nura/*": ["../../packages/*/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,19 @@
+{
+  "entryPoints": [
+    "packages/core/src/index.ts",
+    "packages/plugin-voice/src/index.ts",
+    "packages/plugin-fuzzy/src/index.ts",
+    "packages/vue/src/index.ts"
+  ],
+  "out": "docs/api",
+  "tsconfig": "tsconfig.base.json",
+  "treatWarningsAsErrors": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeInternal": true,
+  "hideGenerator": true,
+  "categorizeByGroup": true,
+  "plugin": [],
+  "readme": "none",
+  "skipErrorChecking": true
+}

@@ -1,0 +1,15 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/core/tsconfig.json" },
+    { "path": "./packages/devtools-lexicon/tsconfig.json" },
+    { "path": "./packages/dom/tsconfig.json" },
+    { "path": "./packages/plugin-fuzzy/tsconfig.json" },
+    { "path": "./packages/plugin-voice/tsconfig.json" },
+    { "path": "./packages/react/tsconfig.json" },
+    { "path": "./packages/svelte/tsconfig.json" },
+    { "path": "./packages/vue/tsconfig.json" },
+    { "path": "./apps/demo/tsconfig.json" },
+    { "path": "./apps/vue-demo/tsconfig.json" }
+  ]
+}

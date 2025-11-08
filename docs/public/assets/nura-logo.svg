@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">Nura.js Logo</title>
+  <desc id="logoDesc">Stylized wave and spark representing Nura voice automation</desc>
+  <defs>
+    <linearGradient id="wave" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#1e40af" />
+    </linearGradient>
+    <linearGradient id="spark" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#facc15" />
+      <stop offset="100%" stop-color="#f59e0b" />
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="32" fill="#0f172a" />
+  <path d="M24 96c18-32 42-48 72-48 22 0 40 8 56 24" fill="none" stroke="url(#wave)" stroke-width="16" stroke-linecap="round" />
+  <path d="M88 120c-18 0-32-14-32-32s14-32 32-32 32 14 32 32" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round" />
+  <circle cx="120" cy="56" r="12" fill="url(#spark)" />
+</svg>

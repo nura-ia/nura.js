@@ -1,0 +1,35 @@
+export const seedLexicon: Array<{ locale: string; terms: Record<string, string> }> = [
+  {
+    locale: 'es',
+    terms: {
+      orden: 'order',
+      'órdenes': 'order',
+      pedido: 'order',
+      pedidos: 'order',
+      ticket: 'order',
+      tickets: 'order',
+      cliente: 'customer',
+      usuario: 'customer',
+      persona: 'customer',
+      'menú': 'menu',
+      menu: 'menu',
+      'órdenes_menu': 'menu:orders',
+      ordenes: 'order',
+      el: 'the',
+      la: 'the',
+      los: 'the',
+      las: 'the',
+    },
+  },
+  {
+    locale: 'en',
+    terms: {
+      orders: 'order',
+      order: 'order',
+      client: 'customer',
+      customer: 'customer',
+      menu: 'menu',
+      'orders_menu': 'menu:orders',
+    },
+  },
+]

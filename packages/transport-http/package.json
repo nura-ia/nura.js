@@ -1,0 +1,54 @@
+{
+  "name": "@nurajs/transport-http",
+  "version": "0.1.0",
+  "description": "Expose Nura intents over a hardened HTTP router with rate limiting and idempotency",
+  "type": "module",
+  "sideEffects": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nura-ia/nurajs.git",
+    "directory": "packages/transport-http"
+  },
+  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/transport-http",
+  "bugs": {
+    "url": "https://github.com/nura-ia/nurajs/issues"
+  },
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts --treeshake",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "keywords": [
+    "nura",
+    "intents",
+    "http",
+    "express",
+    "ai"
+  ],
+  "dependencies": {
+    "@nurajs/intents": "workspace:*",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/supertest": "^2.0.16",
+    "supertest": "^7.1.1"
+  }
+}

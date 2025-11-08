@@ -1,0 +1,101 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ES2020",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": false,
+    "checkJs": false,
+    "jsx": "preserve",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "declaration": true,
+    "baseUrl": ".",
+    "paths": {
+      "@nura/core": [
+        "packages/core/types/index.d.ts"
+      ],
+      "@nura/core/*": [
+        "packages/core/types/*"
+      ],
+      "@nura/dom": [
+        "packages/dom/types/index.d.ts"
+      ],
+      "@nura/dom/*": [
+        "packages/dom/types/*"
+      ],
+      "@nura/react": [
+        "packages/react/types/index.d.ts"
+      ],
+      "@nura/react/*": [
+        "packages/react/types/*"
+      ],
+      "@nura/vue": [
+        "packages/vue/types/index.d.ts"
+      ],
+      "@nura/vue/*": [
+        "packages/vue/types/*"
+      ],
+      "@nura/svelte": [
+        "packages/svelte/types/index.d.ts"
+      ],
+      "@nura/svelte/*": [
+        "packages/svelte/types/*"
+      ],
+      "@nura/plugin-voice": [
+        "packages/plugin-voice/types/index.d.ts"
+      ],
+      "@nura/plugin-voice/*": [
+        "packages/plugin-voice/types/*"
+      ],
+      "@nura/plugin-fuzzy": [
+        "packages/plugin-fuzzy/types/index.d.ts"
+      ],
+      "@nura/plugin-fuzzy/*": [
+        "packages/plugin-fuzzy/types/*"
+      ],
+      "@nura/intents": [
+        "packages/intents/src/index.ts"
+      ],
+      "@nura/transport-http": [
+        "packages/transport-http/src/index.ts"
+      ],
+      "@nura/client": [
+        "packages/client/src/index.ts"
+      ],
+      "@nurajs/intents": [
+        "packages/intents/src/index.ts"
+      ],
+      "@nurajs/transport-http": [
+        "packages/transport-http/src/index.ts"
+      ],
+      "@nurajs/client": [
+        "packages/client/src/index.ts"
+      ],
+      "@nura/devtools-lexicon": [
+        "packages/devtools-lexicon/types/index.d.ts"
+      ],
+      "@nura/devtools-lexicon/*": [
+        "packages/devtools-lexicon/types/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".next",
+    "coverage"
+  ]
+}

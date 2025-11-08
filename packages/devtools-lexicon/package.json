@@ -1,0 +1,33 @@
+{
+  "name": "@nura/devtools-lexicon",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Developer overlay and lexicon visualization tools for Nura.js",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nura-ia/nurajs.git",
+    "directory": "packages/devtools-lexicon"
+  },
+  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/devtools-lexicon",
+  "bugs": {
+    "url": "https://github.com/nura-ia/nurajs/issues"
+  },
+  "exports": "./src/index.ts",
+  "keywords": [
+    "nura",
+    "devtools",
+    "lexicon"
+  ],
+  "peerDependencies": {
+    "@nura/core": ">=0.1.0",
+    "@nura/plugin-voice": ">=0.1.0",
+    "vue": ">=3.3.0"
+  },
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx,.mts,.cts,.vue",
+    "lint:fix": "eslint . --ext .ts,.tsx,.mts,.cts,.vue --fix",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

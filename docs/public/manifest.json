@@ -1,0 +1,16 @@
+{
+  "name": "Nura.js Documentation",
+  "short_name": "Nura Docs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#2563eb",
+  "description": "Official documentation for the Nura.js voice and automation framework.",
+  "icons": [
+    {
+      "src": "/assets/nura-logo.svg",
+      "sizes": "160x160",
+      "type": "image/svg+xml"
+    }
+  ]
+}
