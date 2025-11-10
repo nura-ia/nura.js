@@ -21,8 +21,8 @@
     "lexicon"
   ],
   "peerDependencies": {
-    "@nura/core": ">=0.1.0",
-    "@nura/plugin-voice": ">=0.1.0",
+    "@nura/core": ">=0.2.0",
+    "@nura/plugin-voice": ">=1.0.0",
     "vue": ">=3.3.0"
   },
   "scripts": {

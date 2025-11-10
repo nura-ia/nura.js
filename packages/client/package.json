@@ -1,6 +1,6 @@
 {
   "name": "@nurajs/client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Interact with the Nura AI intent surface from any UI or agent client",
   "type": "module",
   "sideEffects": false,

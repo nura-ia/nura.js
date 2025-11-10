@@ -1,6 +1,6 @@
 {
   "name": "@nurajs/transport-http",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Expose Nura intents over a hardened HTTP router with rate limiting and idempotency",
   "type": "module",
   "sideEffects": false,

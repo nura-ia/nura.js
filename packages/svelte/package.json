@@ -1,6 +1,6 @@
 {
   "name": "@nura/svelte",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte adapter for Nura.js",
   "type": "module",
   "license": "MIT",

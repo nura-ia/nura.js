@@ -1,6 +1,6 @@
 {
   "name": "@nura/plugin-fuzzy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Lightweight fuzzy matching utilities for Nura.js",
   "type": "module",
   "license": "MIT",

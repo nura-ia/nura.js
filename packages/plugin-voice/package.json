@@ -1,6 +1,6 @@
 {
   "name": "@nura/plugin-voice",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Voice plugin for Nura.js command registry",
   "type": "module",
   "license": "MIT",
@@ -33,13 +33,17 @@
     "build": "tsup src/index.ts --dts --format esm,cjs --treeshake --clean",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "keywords": ["nura", "voice", "commands"],
+  "keywords": [
+    "nura",
+    "voice",
+    "commands"
+  ],
   "dependencies": {
     "@nura/core": "workspace:*",
     "@nura/plugin-fuzzy": "workspace:*"
   },
   "peerDependencies": {
-    "@nura/core": ">=0.1.0"
+    "@nura/core": ">=0.2.0"
   },
   "devDependencies": {
     "tsup": "^8.5.0",

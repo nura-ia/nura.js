@@ -1,6 +1,6 @@
 {
   "name": "@nura/vue",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vue adapter for Nura.js",
   "type": "module",
   "license": "MIT",
@@ -33,7 +33,12 @@
     "build": "tsup src/index.ts --dts --format esm,cjs --treeshake --clean",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
-  "keywords": ["nura", "vue", "directives", "composables"],
+  "keywords": [
+    "nura",
+    "vue",
+    "directives",
+    "composables"
+  ],
   "dependencies": {
     "@nura/core": "workspace:*"
   },
