@@ -4,12 +4,18 @@ on:
   push:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      CI: true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,33 +24,25 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: pnpm
+          cache: 'pnpm'
 
-      # 🔧 Asegura Corepack y PNPM 8.15.0 sí o sí
-      - name: Enable Corepack & pin PNPM
-        shell: bash
+      - name: Setup PNPM
+        uses: pnpm/setup-pnpm@v2
+        with:
+          version: 8.15.0
+
+      - name: Print versions
         run: |
-          set -euxo pipefail
           node -v
-          npm -v
-          # Instala corepack si el runner no lo trae
-          npm install -g corepack
-          corepack --version || true
-          corepack enable
-          # Activa PNPM 8.15.0 (según tu packageManager)
-          corepack prepare pnpm@8.15.0 --activate || true
-          # Respaldo por si corepack falla
-          command -v pnpm >/dev/null 2>&1 || npm i -g pnpm@8.15.0
           pnpm -v
-          which pnpm || command -v pnpm
 
-      - name: Install
-        run: pnpm install
+      - name: Install (frozen)
+        run: pnpm install --frozen-lockfile
 
-      - name: Typecheck
+      - name: Typecheck (workspace)
         run: pnpm -w run typecheck
 
-      - name: Build
+      - name: Build (workspace)
         run: pnpm -w run build
 
       - name: Smoke
