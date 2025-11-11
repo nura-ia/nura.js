@@ -43,8 +43,8 @@ export const registry = createRegistry({
 ```ts
 import { normalizeSynonyms } from '@nura-js/core/synonyms';
 
-const normalized = normalizeSynonyms('abre el menú de pedidos', 'es');
-// → "abre el menú de órdenes"
+const normalized = normalizeSynonyms('open the orders menu', 'en');
+// → "open the orders menu"
 ```
 
 ## Parse Numerals inside Commands
@@ -52,7 +52,7 @@ const normalized = normalizeSynonyms('abre el menú de pedidos', 'es');
 ```ts
 import { parseNumeral } from '@nura-js/core/numerals';
 
-const quantity = parseNumeral('quince', 'es');
+const quantity = parseNumeral('fifteen', 'en');
 // quantity === 15
 ```
 
@@ -62,11 +62,11 @@ const quantity = parseNumeral('quince', 'es');
 import { rankCandidates } from '@nura-js/plugin-fuzzy';
 
 const intents = [
-  { id: 'open.orders', phrase: 'abre el menú de órdenes' },
-  { id: 'delete.order', phrase: 'borra la orden {id}' },
+  { id: 'open.orders', phrase: 'open the orders menu' },
+  { id: 'delete.order', phrase: 'delete order {id}' },
 ];
 
-const { best } = rankCandidates('abre el menú de pedidos', intents, {
+const { best } = rankCandidates('open the orders menu', intents, {
   threshold: 0.8,
   strategy: 'hybrid',
 });
@@ -89,7 +89,7 @@ const registry = createRegistry({
       type: 'open',
       target: 'orders',
       phrases: {
-        'es-CR': { canonical: ['abre órdenes'], wake: ['hey nura'] },
+        'en-US': { canonical: ['open orders'], wake: ['hey nura'] },
       },
     }),
   ],
@@ -97,7 +97,7 @@ const registry = createRegistry({
 });
 
 registry.agents.start('voice', {
-  locale: 'es-CR',
+  locale: 'en-US',
   intents: registry.actions.intents(),
 });
 ```

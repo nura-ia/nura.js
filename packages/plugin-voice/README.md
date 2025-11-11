@@ -21,7 +21,7 @@ const registry = createRegistry({
       type: 'open',
       target: 'orders',
       phrases: {
-        'es-CR': { canonical: ['abre órdenes'], wake: ['hey nura'] },
+        'en-US': { canonical: ['open orders'], wake: ['hey nura'] },
       },
     }),
   ],
@@ -29,7 +29,7 @@ const registry = createRegistry({
 });
 
 registry.agents.start('voice', {
-  locale: 'es-CR',
+  locale: 'en-US',
   intents: registry.actions.intents(),
 });
 ```

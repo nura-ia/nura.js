@@ -105,13 +105,13 @@ const text = stripWake('ok nora open orders menu', {
 });
 // → "open orders menu"
 
-const id = parseNumeral('quince', 'es'); // → 15
-const normalized = normalizeSynonyms('abre el menú de pedidos', 'es');
-// → normalizes "pedidos" to "órdenes" per locale dictionary
+const id = parseNumeral('fifteen', 'en'); // → 15
+const normalized = normalizeSynonyms('open the orders menu', 'en');
+// → normalizes synonyms per locale dictionary
 
 const ctx = new ContextManager();
 ctx.save({ type: 'delete', target: 'order', payload: { id } });
-const next = ctx.maybeConfirm('sí, elimínala');
+const next = ctx.maybeConfirm('yes, delete it');
 // → { type: 'delete', target: 'order', payload: { id: 15 } }
 ```
 

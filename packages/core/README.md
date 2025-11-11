@@ -29,26 +29,26 @@ const registry = createRegistry({
       type: 'open',
       target: 'orders',
       phrases: {
-        'es-CR': { canonical: ['abre órdenes'] },
+        'en-US': { canonical: ['open orders'] },
       },
     }),
   ],
 });
 
 const nura = new Nura({ registry });
-const context = new ContextManager({ locale: 'es-CR' });
+const context = new ContextManager({ locale: 'en-US' });
 context.set('customerId', 42);
 
-const input = 'hey nura abre órdenes';
+const input = 'hey nura open orders';
 const withoutWake = stripWake(input, { wakeWords: ['hey nura'] });
-const locale = detectLocale(withoutWake, ['es-CR', 'en-US']);
-const amount = parseNumeral('quince', locale);
-const normalized = normalizeSynonyms('árbol', locale);
+const locale = detectLocale(withoutWake, ['en-US', 'es-CR']);
+const amount = parseNumeral('fifteen', locale);
+const normalized = normalizeSynonyms('tree', locale);
 
 await nura.act({
   type: 'open',
   target: 'orders',
-  meta: { desc: `Abrir ${normalized} (${amount})` },
+  meta: { desc: `Open ${normalized} (${amount})` },
 });
 ```
 
@@ -66,7 +66,7 @@ await nura.act({
 
 - `NAction` — executable action shape.
 - `NRegistry` — registry definition including actions and agents.
-- `NLocale` — BCP 47 locale identifier (`'es-CR'`, `'en-US'`).
+- `NLocale` — BCP 47 locale identifier (`'en-US'`, `'es-CR'`).
 - `NAgent` — plugin extension for the runtime.
 
 ## Additional Resources

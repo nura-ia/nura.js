@@ -16,11 +16,11 @@ import { matchFuzzy, tokenizeAndScore, compareWakeWord } from '@nura-js/plugin-f
 const brands = ['Nura', 'Núria', 'Nero'];
 const match = matchFuzzy('nura', brands, { locale: 'es' });
 
-const tokens = tokenizeAndScore('abre el modo noche', ['modo noche', 'modo día']);
+const tokens = tokenizeAndScore('open night mode', ['night mode', 'day mode']);
 
 const wake = compareWakeWord('hey nura', {
   canonical: 'hey nura',
-  aliases: ['hola nura'],
+  aliases: ['hello nura'],
 });
 ```
 

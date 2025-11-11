@@ -24,12 +24,12 @@
 import { Nura, createRegistry, defineActionSpec } from '@nura-js/core'
 
 const registry = createRegistry({
-  config: { app: { id: 'app', locale: 'es' } },
+  config: { app: { id: 'app', locale: 'en' } },
   specs: [
     defineActionSpec({
       name: 'open::orders',
       type: 'open',
-      phrases: { es: { canonical: ['abre pedidos'] } },
+      phrases: { en: { canonical: ['open orders'] } },
     }),
   ],
 })
@@ -65,7 +65,7 @@ const agent = voiceAgent({ wakeWords: ['ok nura'] })
 registry.actions.register(defineActionSpec({
   name: 'open::orders',
   type: 'open',
-  phrases: { es: { canonical: ['abre pedidos'] } },
+  phrases: { en: { canonical: ['open orders'] } },
 }))
 await agent.start({ registry, act: (action) => nura.act(action) } as any)
 ```
@@ -81,8 +81,8 @@ await agent.start({ registry, act: (action) => nura.act(action) } as any)
 ```ts
 import { matchFuzzy, compareWakeWord } from '@nura-js/plugin-fuzzy'
 
-matchFuzzy('menu pedidos', ['menú pedidos', 'cierra pedidos'], { locale: 'es' })
-compareWakeWord('ok nora abre', { canonical: 'nura', aliases: ['nora'] })
+matchFuzzy('orders menu', ['orders menu', 'close orders'], { locale: 'en' })
+compareWakeWord('ok nora open', { canonical: 'nura', aliases: ['nora'] })
 ```
 
 # @nura-js/vue
@@ -99,7 +99,7 @@ compareWakeWord('ok nora abre', { canonical: 'nura', aliases: ['nora'] })
 const nura = new Nura({ registry })
 app.use(withVue(nura))
 
-<button v-nu-act="{ type: 'open', target: 'orders' }" aria-label="Abrir pedidos">Abrir</button>
+<button v-nu-act="{ type: 'open', target: 'orders' }" aria-label="Open orders">Open</button>
 <div v-nu-guard="{ scope: 'orders', action: 'delete', hideIfForbidden: true }">...</div>
 ```
 
