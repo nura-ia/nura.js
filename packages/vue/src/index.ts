@@ -1,5 +1,5 @@
 import type { App, DirectiveBinding, InjectionKey } from 'vue'
-import type { LegacyNuraAction, ModernNAction, NAction, Nura } from '@nura/core'
+import type { LegacyNuraAction, ModernNAction, NAction, Nura } from '@nura-js/core'
 
 type ImportMetaWithEnv = ImportMeta & { env?: { MODE?: string } }
 type NuActElement = HTMLElement & {

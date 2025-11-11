@@ -1,1 +1,1 @@
-declare module '@nura/vue';
+declare module '@nura-js/vue';

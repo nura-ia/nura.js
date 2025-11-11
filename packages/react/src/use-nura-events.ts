@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 import { useNuraContext } from "./context"
-import type { NuraEventType, NuraEventListener } from "@nura/core"
+import type { NuraEventType, NuraEventListener } from "@nura-js/core"
 
 export function useNuraEvent(type: NuraEventType, listener: NuraEventListener) {
   const { registry } = useNuraContext()

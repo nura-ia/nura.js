@@ -1,6 +1,6 @@
 import { inject, type App, type InjectionKey } from "vue"
-import { createRegistry, type NuraRegistry, type NuraConfig } from "@nura/core"
-import { DOMIndexer } from "@nura/dom"
+import { createRegistry, type NuraRegistry, type NuraConfig } from "@nura-js/core"
+import { DOMIndexer } from "@nura-js/dom"
 
 export interface NuraVueOptions {
   config?: NuraConfig

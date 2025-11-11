@@ -1,4 +1,4 @@
-import type { NLexicon, NSense, NLocale } from '@nura/core'
+import type { NLexicon, NSense, NLocale } from '@nura-js/core'
 
 export type LexRow = { term: string; canonical: string }
 

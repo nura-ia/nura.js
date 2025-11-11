@@ -1,6 +1,6 @@
 <script lang="ts">
   import { nura } from "../actions/nura"
-  import type { NuraVerb, NuraScope } from "@nura/core"
+  import type { NuraVerb, NuraScope } from "@nura-js/core"
 
   interface Props {
     scope: NuraScope;

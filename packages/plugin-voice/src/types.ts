@@ -1,11 +1,11 @@
-import type { NActionMeta, NActionSpecMeta } from '@nura/core'
+import type { NActionMeta, NActionSpecMeta } from '@nura-js/core'
 import type {
   NAction,
   NActionSpec,
   NContext,
   NEntityDef,
   NLocale,
-} from '@nura/core'
+} from '@nura-js/core'
 
 export type NIntent = {
   name: string

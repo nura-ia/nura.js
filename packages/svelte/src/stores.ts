@@ -1,6 +1,6 @@
 import { writable, type Readable } from "svelte/store"
 import { getNuraContext } from "./context"
-import type { NuraElement, NuraScope, NuraVerb } from "@nura/core"
+import type { NuraElement, NuraScope, NuraVerb } from "@nura-js/core"
 
 type ActionSpecList = ReturnType<
   ReturnType<typeof getNuraContext>["registry"]["actions"]["listSpecs"]

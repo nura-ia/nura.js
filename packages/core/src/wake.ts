@@ -2,7 +2,7 @@ import {
   compareWakeWord as fuzzyCompareWakeWord,
   damerauLevenshteinSimilarity,
   type FuzzyMatchOpts,
-} from '@nura/plugin-fuzzy'
+} from '@nura-js/plugin-fuzzy'
 
 const CANONICAL_WAKE = 'nura'
 const DEFAULT_MIN_CONFIDENCE = 0.7

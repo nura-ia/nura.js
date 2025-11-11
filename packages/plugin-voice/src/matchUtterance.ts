@@ -2,17 +2,17 @@ import {
   damerauLevenshteinSimilarity,
   tokenizeAndScore,
   type TokenScore,
-} from '@nura/plugin-fuzzy'
-import { parseBoolean, parseDate, parseNumber, parseRangeNumber } from '@nura/core'
-import type { NActionSpecMeta } from '@nura/core'
+} from '@nura-js/plugin-fuzzy'
+import { parseBoolean, parseDate, parseNumber, parseRangeNumber } from '@nura-js/core'
+import type { NActionSpecMeta } from '@nura-js/core'
 import type {
   ModernNAction,
   NAction,
   NContext,
   NEntityDef,
   NLocale,
-} from '@nura/core'
-import { toNumberLoose } from '@nura/core/numerals'
+} from '@nura-js/core'
+import { toNumberLoose } from '@nura-js/core/numerals'
 
 import type {
   IntentMatchResult,

@@ -2,7 +2,7 @@
 
 import { forwardRef, type ComponentPropsWithRef } from "react"
 import { useNuraElement } from "../use-nura-element"
-import type { NuraScope } from "@nura/core"
+import type { NuraScope } from "@nura-js/core"
 
 export interface NuraButtonProps extends Omit<ComponentPropsWithRef<"button">, "ref"> {
   scope: NuraScope

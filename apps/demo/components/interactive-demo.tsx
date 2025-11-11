@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useNuraAction, NuraElement, NuraButton } from "@nura/react"
+import { useNuraAction, NuraElement, NuraButton } from "@nura-js/react"
 
 export function InteractiveDemo() {
   const [isModalOpen, setIsModalOpen] = useState(false)

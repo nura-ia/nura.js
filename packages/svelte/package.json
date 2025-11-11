@@ -1,5 +1,5 @@
 {
-  "name": "@nura/svelte",
+  "name": "@nura-js/svelte",
   "version": "0.1.1",
   "description": "Svelte adapter for Nura.js",
   "type": "module",
@@ -44,14 +44,17 @@
     "svelte": ">=4"
   },
   "dependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/dom": "workspace:*"
+    "@nura-js/core": "workspace:*",
+    "@nura-js/dom": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
     "svelte": "^4.2.0",
     "tsup": "^8.5.0",
     "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   },
   "publishConfig": {
     "access": "public"

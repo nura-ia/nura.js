@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useNuraContext } from "./context"
-import type { NuraVerb, NuraScope, NuraPermission } from "@nura/core"
+import type { NuraVerb, NuraScope, NuraPermission } from "@nura-js/core"
 
 export interface UseNuraPermissionOptions {
   scope: NuraScope

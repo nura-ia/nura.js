@@ -1,13 +1,13 @@
-import { stripWake } from '@nura/core/wake'
-import { ContextManager } from '@nura/core/context'
-import { detectLocale } from '@nura/core/locale'
-import { parseNumeral } from '@nura/core/numerals'
-import { normalizeSynonyms } from '@nura/core/synonyms'
+import { stripWake } from '@nura-js/core/wake'
+import { ContextManager } from '@nura-js/core/context'
+import { detectLocale } from '@nura-js/core/locale'
+import { parseNumeral } from '@nura-js/core/numerals'
+import { normalizeSynonyms } from '@nura-js/core/synonyms'
 import {
   registerType,
   createIntent as createAiIntent,
   getIntentResult as getAiIntentResult,
-} from '@nurajs/intents'
+} from '@nura-js/intents'
 
 function log(title, value) {
   console.log(title, typeof value === 'string' ? value : JSON.stringify(value))

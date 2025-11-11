@@ -1,5 +1,5 @@
 import type { App, DirectiveBinding } from 'vue'
-import type { NContext } from '@nura/core'
+import type { NContext } from '@nura-js/core'
 
 export function installI18nDirective(app: App, ctx: NContext) {
   app.directive('nu-i18n', {

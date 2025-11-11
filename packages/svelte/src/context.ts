@@ -1,6 +1,6 @@
 import { getContext, setContext } from "svelte"
-import { createRegistry, type NuraRegistry, type NuraConfig } from "@nura/core"
-import { DOMIndexer } from "@nura/dom"
+import { createRegistry, type NuraRegistry, type NuraConfig } from "@nura-js/core"
+import { DOMIndexer } from "@nura-js/dom"
 
 export interface NuraContext {
   registry: NuraRegistry

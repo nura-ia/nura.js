@@ -1,5 +1,5 @@
 {
-  "name": "@nura/plugin-voice",
+  "name": "@nura-js/plugin-voice",
   "version": "1.0.0",
   "description": "Voice plugin for Nura.js command registry",
   "type": "module",
@@ -39,15 +39,18 @@
     "commands"
   ],
   "dependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/plugin-fuzzy": "workspace:*"
+    "@nura-js/core": "workspace:*",
+    "@nura-js/plugin-fuzzy": "workspace:*"
   },
   "peerDependencies": {
-    "@nura/core": ">=0.2.0"
+    "@nura-js/core": ">=0.2.0"
   },
   "devDependencies": {
     "tsup": "^8.5.0",
     "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,5 @@
 {
-  "name": "@nura/examples",
+  "name": "@nura-js/examples",
   "version": "0.1.0",
   "private": true,
   "description": "Example scenarios demonstrating Nura.js usage",
@@ -22,18 +22,18 @@
     "typecheck:skip": "echo skipped"
   },
   "dependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/plugin-voice": "workspace:*",
-    "@nurajs/intents": "workspace:*",
-    "@nurajs/transport-http": "workspace:*",
-    "@nurajs/client": "workspace:*",
+    "@nura-js/core": "workspace:*",
+    "@nura-js/plugin-voice": "workspace:*",
+    "@nura-js/intents": "workspace:*",
+    "@nura-js/transport-http": "workspace:*",
+    "@nura-js/client": "workspace:*",
     "express": "^4.19.2"
   },
   "devDependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/plugin-voice": "workspace:*",
-    "@nurajs/intents": "workspace:*",
-    "@nurajs/transport-http": "workspace:*",
-    "@nurajs/client": "workspace:*"
+    "@nura-js/core": "workspace:*",
+    "@nura-js/plugin-voice": "workspace:*",
+    "@nura-js/intents": "workspace:*",
+    "@nura-js/transport-http": "workspace:*",
+    "@nura-js/client": "workspace:*"
   }
 }

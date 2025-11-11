@@ -1,5 +1,5 @@
 {
-  "name": "@nurajs/client",
+  "name": "@nura-js/client",
   "version": "0.2.0",
   "description": "Interact with the Nura AI intent surface from any UI or agent client",
   "type": "module",
@@ -43,6 +43,12 @@
     "ui"
   ],
   "dependencies": {
-    "@nurajs/intents": "workspace:*"
+    "@nura-js/intents": "workspace:*"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

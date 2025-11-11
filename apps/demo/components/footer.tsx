@@ -1,6 +1,6 @@
 "use client"
 
-import { NuraElement } from "@nura/react"
+import { NuraElement } from "@nura-js/react"
 
 export function Footer() {
   return (

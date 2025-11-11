@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useEffect } from "react"
-import type { NuraVerb, NuraScope } from "@nura/core"
+import type { NuraVerb, NuraScope } from "@nura-js/core"
 
 export interface UseNuraElementOptions {
   scope: NuraScope

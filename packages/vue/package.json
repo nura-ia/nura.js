@@ -1,5 +1,5 @@
 {
-  "name": "@nura/vue",
+  "name": "@nura-js/vue",
   "version": "0.1.1",
   "description": "Vue adapter for Nura.js",
   "type": "module",
@@ -40,7 +40,7 @@
     "composables"
   ],
   "dependencies": {
-    "@nura/core": "workspace:*"
+    "@nura-js/core": "workspace:*"
   },
   "peerDependencies": {
     "vue": ">=3"
@@ -48,6 +48,9 @@
   "devDependencies": {
     "tsup": "^8.5.0",
     "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   },
   "publishConfig": {
     "access": "public"

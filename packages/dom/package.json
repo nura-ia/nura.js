@@ -1,5 +1,5 @@
 {
-  "name": "@nura/dom",
+  "name": "@nura-js/dom",
   "version": "0.1.1",
   "description": "DOM indexing and scanning for Nura.js",
   "type": "module",
@@ -40,11 +40,14 @@
     "scanner"
   ],
   "dependencies": {
-    "@nura/core": "workspace:*"
+    "@nura-js/core": "workspace:*"
   },
   "devDependencies": {
     "tsup": "^8.5.0",
     "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   },
   "publishConfig": {
     "access": "public"

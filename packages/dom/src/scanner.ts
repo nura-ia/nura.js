@@ -1,4 +1,4 @@
-import type { NuraElement, NuraVerb, NuraScope } from "@nura/core"
+import type { NuraElement, NuraVerb, NuraScope } from "@nura-js/core"
 import { parseVerbList } from "./verbs"
 
 export interface ScanResult {

@@ -1,4 +1,4 @@
-import type { NAction } from '@nura/core'
+import type { NAction } from '@nura-js/core'
 import { mcpCallTool, mcpIsConnected, sanitizeToolArgs } from './client.js'
 
 export const NURA_TO_MCP: Record<

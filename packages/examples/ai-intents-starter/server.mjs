@@ -1,8 +1,8 @@
 import express from 'express'
 import { fileURLToPath } from 'node:url'
 import { dirname } from 'node:path'
-import { registerType } from '@nurajs/intents'
-import { buildRouter } from '@nurajs/transport-http'
+import { registerType } from '@nura-js/intents'
+import { buildRouter } from '@nura-js/transport-http'
 
 registerType({
   type: 'orders.create',

@@ -1,8 +1,8 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
-import { createRegistry, type NuraRegistry, type NuraConfig } from "@nura/core"
-import { DOMIndexer } from "@nura/dom"
+import { createRegistry, type NuraRegistry, type NuraConfig } from "@nura-js/core"
+import { DOMIndexer } from "@nura-js/dom"
 
 interface NuraContextValue {
   registry: NuraRegistry

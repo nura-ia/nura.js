@@ -1,5 +1,5 @@
 import type { Directive } from "vue"
-import type { NuraVerb, NuraScope } from "@nura/core"
+import type { NuraVerb, NuraScope } from "@nura-js/core"
 
 export interface VNuraBinding {
   scope: NuraScope

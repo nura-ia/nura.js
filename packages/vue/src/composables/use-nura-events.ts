@@ -1,6 +1,6 @@
 import { onMounted, onBeforeUnmount } from "vue"
 import { useNuraInstance } from "../plugin"
-import type { NuraEventType, NuraEventListener } from "@nura/core"
+import type { NuraEventType, NuraEventListener } from "@nura-js/core"
 
 export function useNuraEvent(type: NuraEventType, listener: NuraEventListener) {
   const { registry } = useNuraInstance()

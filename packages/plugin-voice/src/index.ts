@@ -9,7 +9,7 @@ import type {
   ModernNAction,
   NI18n,
   NLexicon,
-} from '@nura/core'
+} from '@nura-js/core'
 import {
   collectCommandVariants,
   collectEntityVariants,
@@ -19,8 +19,8 @@ import {
   parseEnum,
   parseNumber,
   parseRangeNumber,
-} from '@nura/core'
-import { toNumberLoose } from '@nura/core/numerals'
+} from '@nura-js/core'
+import { toNumberLoose } from '@nura-js/core/numerals'
 
 import { matchUtterance } from './matchUtterance'
 import { normalizeUtterance } from './text'
@@ -431,5 +431,5 @@ export function voiceAgent(opts: NVoiceOptions = {}): NAgent {
 
 export { matchUtterance } from './matchUtterance'
 export { detectWake, normalizeWakeWords, stripWake } from './wake'
-export { compareWakeWord } from '@nura/core/wake'
+export { compareWakeWord } from '@nura-js/core/wake'
 export type { NIntent, NVoiceOptions } from './types'

@@ -1,5 +1,5 @@
 import { createApp as createVueApp } from 'vue'
-import type { NContext } from '@nura/core'
+import type { NContext } from '@nura-js/core'
 import Panel from './panel.vue'
 import './styles.css'
 

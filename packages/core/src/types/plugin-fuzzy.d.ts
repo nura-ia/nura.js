@@ -1,4 +1,4 @@
-declare module '@nura/plugin-fuzzy' {
+declare module '@nura-js/plugin-fuzzy' {
   export type FuzzyStrategy = 'damerau' | 'soundex' | 'double-metaphone' | 'hybrid'
 
   export interface FuzzyMatchOpts {

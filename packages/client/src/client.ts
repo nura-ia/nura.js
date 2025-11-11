@@ -1,4 +1,4 @@
-import type { NIntent, NIntentResponse, NIntentResult } from '@nurajs/intents';
+import type { NIntent, NIntentResponse, NIntentResult } from '@nura-js/intents';
 
 export class AiClient {
   constructor(private readonly baseUrl: string, private readonly fetchImpl: typeof fetch = globalThis.fetch) {

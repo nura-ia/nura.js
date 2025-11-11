@@ -1,4 +1,4 @@
-import { matchFuzzy } from '@nura/plugin-fuzzy'
+import { matchFuzzy } from '@nura-js/plugin-fuzzy'
 
 import type { NLocale } from '../types'
 import { toNumberLoose } from '../nlp/numerals'

@@ -1,7 +1,7 @@
-import { Nura, createRegistry, defineActionSpec } from '@nura/core'
-import type { NActionSpec } from '@nura/core'
-import { seedLexicon } from '@nura/core'
-import { voiceAgent } from '@nura/plugin-voice'
+import { Nura, createRegistry, defineActionSpec } from '@nura-js/core'
+import type { NActionSpec } from '@nura-js/core'
+import { seedLexicon } from '@nura-js/core'
+import { voiceAgent } from '@nura-js/plugin-voice'
 
 type DemoContext = Parameters<ReturnType<typeof voiceAgent>['start']>[0]
 

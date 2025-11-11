@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "pnpm -r --filter \"!./apps/**\" --filter \"!./packages/examples/**\" run build",
-    "typecheck": "pnpm -r --filter \"@nura/*\" --filter \"!@nura/examples\" run typecheck && pnpm -r --filter \"@nurajs/*\" run typecheck",
+    "typecheck": "pnpm -r --filter \"@nura-js/*\" --filter \"!@nura-js/examples\" run typecheck",
     "build:all": "pnpm -r run build",
     "typecheck:all": "pnpm -r run typecheck",
     "lint": "eslint .",
@@ -29,18 +29,18 @@
     "docs:spell": "cspell --no-progress \"**/*.md\"",
     "docs:check": "pnpm docs:lint && pnpm docs:links && pnpm docs:spell",
     "pack:clean": "rimraf .packs && mkdir .packs",
-    "pack:each": "pnpm -r --filter \"@nura/*\" --filter \"!@nura/examples\" --filter \"!@nura/devtools-lexicon\" --workspace-concurrency=1 exec -- pnpm pack --pack-destination ../../.packs && pnpm -r --filter \"@nurajs/*\" --workspace-concurrency=1 exec -- pnpm pack --pack-destination ../../.packs",
+    "pack:each": "pnpm -r --filter \"@nura-js/*\" --filter \"!@nura-js/examples\" --filter \"!@nura-js/devtools-lexicon\" --workspace-concurrency=1 exec -- pnpm pack --pack-destination ../../.packs",
     "pack:ls": "node -e \"require('fs').readdirSync('.packs').forEach(f=>console.log(f))\"",
     "smoke": "node scripts/smoke.mjs",
     "verify:release": "pnpm -w run typecheck && pnpm -w run build && pnpm run pack:clean && pnpm run pack:each && pnpm run smoke"
   },
   "dependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/dom": "workspace:*",
-    "@nura/react": "workspace:*",
-    "@nurajs/client": "workspace:*",
-    "@nurajs/intents": "workspace:*",
-    "@nurajs/transport-http": "workspace:*",
+    "@nura-js/core": "workspace:*",
+    "@nura-js/dom": "workspace:*",
+    "@nura-js/react": "workspace:*",
+    "@nura-js/client": "workspace:*",
+    "@nura-js/intents": "workspace:*",
+    "@nura-js/transport-http": "workspace:*",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.454.0",
@@ -95,6 +95,6 @@
   "packageManager": "pnpm@8.15.0",
   "engines": {
     "node": ">=18.18.0",
-    "pnpm": ">=8.0.0"
+    "pnpm": ">=8.15.0"
   }
 }

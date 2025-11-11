@@ -1,5 +1,5 @@
-import { compareWakeWord } from '@nura/core/wake'
-import type { MatchResult } from '@nura/plugin-fuzzy'
+import { compareWakeWord } from '@nura-js/core/wake'
+import type { MatchResult } from '@nura-js/plugin-fuzzy'
 
 import type { WakeWordConfig, WakeWordInput } from './types'
 

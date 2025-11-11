@@ -1,5 +1,5 @@
 import type { Action } from "svelte/action"
-import type { NuraVerb, NuraScope } from "@nura/core"
+import type { NuraVerb, NuraScope } from "@nura-js/core"
 
 export interface NuraActionParams {
   scope: NuraScope

@@ -1,5 +1,5 @@
 {
-  "name": "@nura/core",
+  "name": "@nura-js/core",
   "version": "0.2.0",
   "description": "Core primitives for building AI-friendly interfaces with Nura.js",
   "type": "module",
@@ -74,8 +74,11 @@
     "typescript": "^5.4.0"
   },
   "dependencies": {
-    "@nura/plugin-fuzzy": "workspace:*",
+    "@nura-js/plugin-fuzzy": "workspace:*",
     "tslib": "^2.6.2"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   },
   "publishConfig": {
     "access": "public"

@@ -1,5 +1,5 @@
 {
-  "name": "@nurajs/intents",
+  "name": "@nura-js/intents",
   "version": "0.2.0",
   "description": "Define, validate, and execute AI intents with approvals and JSON policies",
   "type": "module",
@@ -44,5 +44,11 @@
   ],
   "dependencies": {
     "ajv": "^8.17.1"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { NuraProvider } from "@nura/react"
+import { NuraProvider } from "@nura-js/react"
 import { Hero } from "@/components/hero"
 import { Features } from "@/components/features"
 import { InteractiveDemo } from "@/components/interactive-demo"

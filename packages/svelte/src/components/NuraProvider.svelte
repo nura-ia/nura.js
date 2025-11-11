@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy } from "svelte"
   import { initNura } from "../context"
-  import type { NuraConfig } from "@nura/core"
+  import type { NuraConfig } from "@nura-js/core"
 
   interface Props {
     config?: NuraConfig | undefined;

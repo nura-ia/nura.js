@@ -1,6 +1,6 @@
 import { defineComponent, h, type PropType } from "vue"
 import { useNuraElement } from "../composables/use-nura-element"
-import type { NuraVerb, NuraScope } from "@nura/core"
+import type { NuraVerb, NuraScope } from "@nura-js/core"
 
 export default defineComponent({
   name: "NuraElement",

@@ -9,7 +9,7 @@ import {
   type NIntent,
   type NIntentResponse,
   type RateLimiter,
-} from '@nurajs/intents';
+} from '@nura-js/intents';
 
 export interface RateLimitConfig {
   windowMs: number;

@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { NuraElement } from "@nura/react"
+import { NuraElement } from "@nura-js/react"
 
 const examples = {
-  react: `import { NuraProvider, useNuraAction, NuraButton } from '@nura/react'
+  react: `import { NuraProvider, useNuraAction, NuraButton } from '@nura-js/react'
 
 function App() {
   return (
@@ -28,8 +28,8 @@ function MyComponent() {
   )
 }`,
   vue: `<script setup>
-import { NuraProvider } from '@nura/vue'
-import { useNuraAction } from '@nura/vue'
+import { NuraProvider } from '@nura-js/vue'
+import { useNuraAction } from '@nura-js/vue'
 
 useNuraAction({
   verb: 'open',
@@ -48,8 +48,8 @@ useNuraAction({
   </NuraProvider>
 </template>`,
   svelte: `<script>
-  import { NuraProvider, nura } from '@nura/svelte'
-  import { useNuraAction } from '@nura/svelte'
+  import { NuraProvider, nura } from '@nura-js/svelte'
+  import { useNuraAction } from '@nura-js/svelte'
 
   useNuraAction({
     verb: 'open',
@@ -114,7 +114,7 @@ export function CodeExamples() {
         <div className="mt-8 bg-card rounded-lg p-6 border border-border">
           <h3 className="text-xl font-semibold mb-4">Installation</h3>
           <pre className="bg-muted rounded p-4 font-mono text-sm overflow-x-auto">
-            <code>npm install @nura/{activeTab} @nura/core @nura/dom</code>
+            <code>npm install @nura-js/{activeTab} @nura-js/core @nura-js/dom</code>
           </pre>
         </div>
       </div>

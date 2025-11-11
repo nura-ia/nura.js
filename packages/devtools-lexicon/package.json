@@ -1,5 +1,5 @@
 {
-  "name": "@nura/devtools-lexicon",
+  "name": "@nura-js/devtools-lexicon",
   "version": "0.1.0",
   "private": true,
   "description": "Developer overlay and lexicon visualization tools for Nura.js",
@@ -21,8 +21,8 @@
     "lexicon"
   ],
   "peerDependencies": {
-    "@nura/core": ">=0.2.0",
-    "@nura/plugin-voice": ">=1.0.0",
+    "@nura-js/core": ">=0.2.0",
+    "@nura-js/plugin-voice": ">=1.0.0",
     "vue": ">=3.3.0"
   },
   "scripts": {

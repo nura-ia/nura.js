@@ -1,5 +1,5 @@
 {
-  "name": "@nura/react",
+  "name": "@nura-js/react",
   "version": "0.1.1",
   "description": "React adapter for Nura.js",
   "type": "module",
@@ -43,14 +43,17 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/dom": "workspace:*"
+    "@nura-js/core": "workspace:*",
+    "@nura-js/dom": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^18.3.0",
     "react": "^18.3.0",
     "tsup": "^8.5.0",
     "typescript": "^5.5.0"
+  },
+  "engines": {
+    "node": ">=18.18.0"
   },
   "publishConfig": {
     "access": "public"

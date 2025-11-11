@@ -1,6 +1,6 @@
 import { onMount, onDestroy } from "svelte"
 import { getNuraContext } from "../context"
-import type { NuraAction, NuraVerb, NuraScope } from "@nura/core"
+import type { NuraAction, NuraVerb, NuraScope } from "@nura-js/core"
 
 export interface UseNuraActionOptions {
   verb: NuraVerb

@@ -1,4 +1,4 @@
-import type { NuraVerb } from "@nura/core"
+import type { NuraVerb } from "@nura-js/core"
 
 export const KNOWN_NURA_VERBS = [
   "open",

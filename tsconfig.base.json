@@ -24,70 +24,61 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@nura/core": [
+      "@nura-js/core": [
         "packages/core/types/index.d.ts"
       ],
-      "@nura/core/*": [
+      "@nura-js/core/*": [
         "packages/core/types/*"
       ],
-      "@nura/dom": [
+      "@nura-js/dom": [
         "packages/dom/types/index.d.ts"
       ],
-      "@nura/dom/*": [
+      "@nura-js/dom/*": [
         "packages/dom/types/*"
       ],
-      "@nura/react": [
+      "@nura-js/react": [
         "packages/react/types/index.d.ts"
       ],
-      "@nura/react/*": [
+      "@nura-js/react/*": [
         "packages/react/types/*"
       ],
-      "@nura/vue": [
+      "@nura-js/vue": [
         "packages/vue/types/index.d.ts"
       ],
-      "@nura/vue/*": [
+      "@nura-js/vue/*": [
         "packages/vue/types/*"
       ],
-      "@nura/svelte": [
+      "@nura-js/svelte": [
         "packages/svelte/types/index.d.ts"
       ],
-      "@nura/svelte/*": [
+      "@nura-js/svelte/*": [
         "packages/svelte/types/*"
       ],
-      "@nura/plugin-voice": [
+      "@nura-js/plugin-voice": [
         "packages/plugin-voice/types/index.d.ts"
       ],
-      "@nura/plugin-voice/*": [
+      "@nura-js/plugin-voice/*": [
         "packages/plugin-voice/types/*"
       ],
-      "@nura/plugin-fuzzy": [
+      "@nura-js/plugin-fuzzy": [
         "packages/plugin-fuzzy/types/index.d.ts"
       ],
-      "@nura/plugin-fuzzy/*": [
+      "@nura-js/plugin-fuzzy/*": [
         "packages/plugin-fuzzy/types/*"
       ],
-      "@nura/intents": [
+      "@nura-js/intents": [
         "packages/intents/src/index.ts"
       ],
-      "@nura/transport-http": [
+      "@nura-js/transport-http": [
         "packages/transport-http/src/index.ts"
       ],
-      "@nura/client": [
+      "@nura-js/client": [
         "packages/client/src/index.ts"
       ],
-      "@nurajs/intents": [
-        "packages/intents/src/index.ts"
-      ],
-      "@nurajs/transport-http": [
-        "packages/transport-http/src/index.ts"
-      ],
-      "@nurajs/client": [
-        "packages/client/src/index.ts"
-      ],
-      "@nura/devtools-lexicon": [
+      "@nura-js/devtools-lexicon": [
         "packages/devtools-lexicon/types/index.d.ts"
       ],
-      "@nura/devtools-lexicon/*": [
+      "@nura-js/devtools-lexicon/*": [
         "packages/devtools-lexicon/types/*"
       ]
     }

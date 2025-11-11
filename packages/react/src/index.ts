@@ -33,4 +33,4 @@ export type {
   NuraRegistry,
   NuraScope,
   NuraVerb,
-} from "@nura/core"
+} from "@nura-js/core"

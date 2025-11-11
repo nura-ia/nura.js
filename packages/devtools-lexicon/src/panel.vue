@@ -98,10 +98,10 @@ import type {
   NAction,
   NContext,
   NLocale,
-} from '@nura/core'
+} from '@nura-js/core'
 import { listTerms, setTerm, deleteTerm, importJson, exportJson, type LexRow } from './store'
 import type { LexiconPanelOptions } from './index'
-import { detectLocale, matchUtterance, deriveIntentsFromSpecs } from '@nura/plugin-voice'
+import { detectLocale, matchUtterance, deriveIntentsFromSpecs } from '@nura-js/plugin-voice'
 
 interface ProbeCandidate {
   name: string

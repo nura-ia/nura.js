@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { Nura, createRegistry, type NAction, type NContext } from '@nura/core'
-import { withVue } from '@nura/vue'
-import { mountLexiconPanel } from '@nura/devtools-lexicon'
+import { Nura, createRegistry, type NAction, type NContext } from '@nura-js/core'
+import { withVue } from '@nura-js/vue'
+import { mountLexiconPanel } from '@nura-js/devtools-lexicon'
 import { installNuraBridge } from './nura/bootstrap.js'
 
 const registry = createRegistry({

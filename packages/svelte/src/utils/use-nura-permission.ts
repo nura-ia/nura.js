@@ -1,7 +1,7 @@
 import { onMount, onDestroy } from "svelte"
 import { writable } from "svelte/store"
 import { getNuraContext } from "../context"
-import type { NuraVerb, NuraScope, NuraPermission } from "@nura/core"
+import type { NuraVerb, NuraScope, NuraPermission } from "@nura-js/core"
 
 export interface UseNuraPermissionOptions {
   scope: NuraScope

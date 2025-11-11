@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['@nura/core', '@nura/dom', '@nura/react'],
+  transpilePackages: ['@nura-js/core', '@nura-js/dom', '@nura-js/react'],
   eslint: {
     ignoreDuringBuilds: true,
   },

@@ -23,9 +23,9 @@
     "clean": "rm -rf .next"
   },
   "dependencies": {
-    "@nura/core": "workspace:*",
-    "@nura/dom": "workspace:*",
-    "@nura/react": "workspace:*",
+    "@nura-js/core": "workspace:*",
+    "@nura-js/dom": "workspace:*",
+    "@nura-js/react": "workspace:*",
     "next": "^15.1.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

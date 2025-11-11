@@ -1,5 +1,5 @@
 import { ref, onMounted, watch, toRef, unref, type Ref } from "vue"
-import type { NuraVerb, NuraScope } from "@nura/core"
+import type { NuraVerb, NuraScope } from "@nura-js/core"
 
 export interface UseNuraElementOptions {
   scope: NuraScope | Ref<NuraScope>

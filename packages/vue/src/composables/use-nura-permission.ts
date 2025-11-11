@@ -1,6 +1,6 @@
 import { onMounted, onBeforeUnmount, ref, watch, toRef, unref, type Ref } from "vue"
 import { useNuraInstance } from "../plugin"
-import type { NuraVerb, NuraScope, NuraPermission } from "@nura/core"
+import type { NuraVerb, NuraScope, NuraPermission } from "@nura-js/core"
 
 export interface UseNuraPermissionOptions {
   scope: NuraScope | Ref<NuraScope>

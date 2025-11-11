@@ -1,4 +1,4 @@
-import type { NAction, NContext, NResult, Nura } from '@nura/core'
+import type { NAction, NContext, NResult, Nura } from '@nura-js/core'
 import { emitTelemetry, getTelemetryHistory, onTelemetry, type TelemetryEventRecord } from './telemetry.js'
 import { maybeRunMcp } from './mcp/registry.js'
 import { mcpIsConnected } from './mcp/client.js'

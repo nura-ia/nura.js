@@ -1,4 +1,4 @@
-import { AiClient, UiDispatcher } from '@nurajs/client'
+import { AiClient, UiDispatcher } from '@nura-js/client'
 
 const client = new AiClient('/ai')
 const dispatcher = new UiDispatcher()

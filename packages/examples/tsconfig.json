@@ -7,9 +7,9 @@
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@nura/core": ["../core/dist/index.d.ts"],
-      "@nura/plugin-voice": ["../plugin-voice/dist/index.d.ts"],
-      "@nura/core/seeds/*": ["../core/dist/seeds/*"]
+      "@nura-js/core": ["../core/dist/index.d.ts"],
+      "@nura-js/plugin-voice": ["../plugin-voice/dist/index.d.ts"],
+      "@nura-js/core/seeds/*": ["../core/dist/seeds/*"]
     }
   },
   "include": ["src"]
