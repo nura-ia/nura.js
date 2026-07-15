@@ -87,10 +87,10 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
   })
 
 
-  const ipRateLimitMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  function rateLimit(req: Request, res: Response, next: NextFunction) {
     // CodeQL needs to see a synchronous 429 to reliably detect the rate limiter without a library
     if ((req as any)._rateLimitExceeded) {
-      res.status(429).send('Too many requests')
+      res.status(429).json({ error: 'rate_limited', message: 'Too many requests' })
       return
     }
 
@@ -108,12 +108,13 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
       .catch(next)
   }
 
+  router.use(rateLimit)
+
   const jsonParser = json({ limit: bodyLimit })
 
   router.post(
     '/ai/intents',
     enforceJsonContentType,
-    ipRateLimitMiddleware,
     authenticateOperation(security, principals),
     createRateLimitMiddleware(rateLimiter, principals, 'create'),
     jsonParser,
@@ -148,7 +149,6 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
   router.post(
     '/ai/intents/:id/approve',
     enforceJsonContentType,
-    ipRateLimitMiddleware,
     authenticateOperation(security, principals),
     createRateLimitMiddleware(rateLimiter, principals, 'approve'),
     jsonParser,
@@ -173,7 +173,6 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
 
   router.get(
     '/ai/intents/:id',
-    ipRateLimitMiddleware,
     authenticateOperation(security, principals),
     createRateLimitMiddleware(rateLimiter, principals, 'read'),
     authorizeOperation(security, principals, 'read'),
