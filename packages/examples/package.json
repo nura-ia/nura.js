@@ -27,7 +27,7 @@
     "@nura-js/intents": "workspace:*",
     "@nura-js/transport-http": "workspace:*",
     "@nura-js/client": "workspace:*",
-    "express": "^4.19.2"
+    "express": "^5.2.1"
   },
   "devDependencies": {
     "@nura-js/core": "workspace:*",
