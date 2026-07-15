@@ -86,6 +86,22 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
     next()
   })
 
+  router.use(async (req, res, next) => {
+    try {
+      const allowed = await rateLimiter.check(`ip:${req.ip ?? 'unknown'}`)
+      if (!allowed) {
+        res.status(429).json({
+          error: 'rate_limited',
+          message: 'Too many requests',
+        })
+        return
+      }
+      next()
+    } catch (err) {
+      next(err)
+    }
+  })
+
   const jsonParser = json({ limit: bodyLimit })
 
   router.post(

@@ -531,7 +531,8 @@ function normalizeToolName(value: string): string {
   const normalized = value
     .trim()
     .replace(/[^a-zA-Z0-9_-]+/g, '_')
-    .replace(/^_+|_+$/g, '')
+    .replace(/^_+/, '')
+    .replace(/_+$/, '')
     .slice(0, 64)
   if (!normalized) return 'nura_action'
   return /^[a-zA-Z_]/.test(normalized)
