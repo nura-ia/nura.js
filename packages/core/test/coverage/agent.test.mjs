@@ -281,15 +281,10 @@ test('buildAgentTools normalizes schemas, descriptions, fallbacks, and collision
       phrases: { en: { canonical: [] } },
       meta: { agent: true },
     }),
-    actionSpec({
-      name: 'required',
-      target: undefined,
-      scope: 'legacy-scope',
-      entities: [{ name: 'id', type: 'string' }],
-      meta: { agent: true, requiredEntities: ['id', 'missing'] },
-    }),
+    actionSpec({ name: 'required', target: undefined, scope: 'legacy-scope', entities: [{ name: 'id', type: 'string' }], meta: { agent: true, requiredEntities: ['id', 'missing'] } }),
     actionSpec({ name: 'x'.repeat(80) }),
     actionSpec({ name: 'x'.repeat(80) }),
+    actionSpec({ name: '!test!' }),
   ])
 
   assert.equal(tools[0].name, 'Open_orders_now')
@@ -314,6 +309,7 @@ test('buildAgentTools normalizes schemas, descriptions, fallbacks, and collision
   assert.equal(tools[7].name.length, 64)
   assert.notEqual(tools[6].name, tools[7].name)
   assert.ok(tools[7].name.endsWith('_2'))
+  assert.equal(tools[8].name, 'test')
 })
 
 test('NuraAgentBridge exposure is deny-by-default and supports explicit policies', () => {

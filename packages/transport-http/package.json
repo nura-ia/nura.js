@@ -24,17 +24,30 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": ["dist", "README.md", "LICENSE", "package.json"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --treeshake",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
     "test:coverage": "node -e \"require('node:fs').rmSync('.coverage-dist',{recursive:true,force:true})\" && tsc -p tsconfig.coverage.json && node -e \"require('node:fs').writeFileSync('.coverage-dist/package.json','{\\\"type\\\":\\\"commonjs\\\"}\\n')\" && node --test --experimental-test-coverage --test-coverage-include='.coverage-dist/security.js' --test-coverage-lines=100 --test-coverage-functions=100 --test-coverage-branches=100 test/coverage/critical.node.mjs"
   },
-  "keywords": ["nura", "intents", "http", "express", "ai", "security"],
+  "keywords": [
+    "nura",
+    "intents",
+    "http",
+    "express",
+    "ai",
+    "security"
+  ],
   "dependencies": {
     "@nura-js/intents": "workspace:*",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.5.2"
   },
   "engines": {
     "node": ">=18.18.0"
