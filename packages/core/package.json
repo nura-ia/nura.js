@@ -1,17 +1,17 @@
 {
   "name": "@nura-js/core",
   "version": "0.2.0",
-  "description": "Core primitives for building AI-friendly interfaces with Nura.js",
+  "description": "Typed action, policy, context, and agent primitives for Nura.js",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nura-ia/nurajs.git",
+    "url": "https://github.com/nura-ia/nura.js.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/core",
+  "homepage": "https://github.com/nura-ia/nura.js/tree/main/packages/core",
   "bugs": {
-    "url": "https://github.com/nura-ia/nurajs/issues"
+    "url": "https://github.com/nura-ia/nura.js/issues"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -21,6 +21,21 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs",
       "types": "./dist/index.d.ts"
+    },
+    "./agent": {
+      "import": "./dist/agent.js",
+      "require": "./dist/agent.cjs",
+      "types": "./dist/agent.d.ts"
+    },
+    "./runtime": {
+      "import": "./dist/runtime.js",
+      "require": "./dist/runtime.cjs",
+      "types": "./dist/runtime.d.ts"
+    },
+    "./permissions": {
+      "import": "./dist/permissions.js",
+      "require": "./dist/permissions.cjs",
+      "types": "./dist/permissions.d.ts"
     },
     "./wake": {
       "import": "./dist/wake.js",
@@ -61,13 +76,17 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup --config tsup.config.ts",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/*.spec.mjs",
+    "test:coverage": "node -e \"require('node:fs').rmSync('.coverage-dist',{recursive:true,force:true})\" && tsc -p tsconfig.coverage.json && node -e \"require('node:fs').writeFileSync('.coverage-dist/package.json','{\\\"type\\\":\\\"commonjs\\\"}\\n')\" && node --test --experimental-test-coverage --test-coverage-include='.coverage-dist/agent.js' --test-coverage-include='.coverage-dist/runtime.js' --test-coverage-include='.coverage-dist/permissions.js' --test-coverage-lines=100 --test-coverage-functions=100 --test-coverage-branches=100 test/coverage/critical.test.mjs"
   },
   "keywords": [
     "nura",
     "ai",
+    "agents",
     "semantic",
-    "commands"
+    "commands",
+    "llm"
   ],
   "devDependencies": {
     "tsup": "^8.5.0",

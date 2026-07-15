@@ -1,278 +1,214 @@
-# Nura.js — The Agent-UI Bridge
+# Nura.js — The Typed Agent–UI Runtime
 
+[![CI](https://github.com/nura-ia/nura.js/actions/workflows/ci.yml/badge.svg)](https://github.com/nura-ia/nura.js/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@nura-js/core.svg?label=%40nura-js%2Fcore)](https://www.npmjs.com/package/@nura-js/core)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-**Nura.js** harmonizes AI agents and UI layers so teams can build interfaces that listen, understand, and act. Born from the ideals of *nur* (light) and *pneuma* (breath), it carries Billy Rojas's vision of living, conversational software.
+**Nura.js makes existing web applications safely controllable by AI agents, LLM tool calls, voice, and normal UI events.** It converts application capabilities into typed actions, applies one policy boundary, and exposes a bounded semantic view of the current interface without giving a model unrestricted DOM access.
 
-> "Create a world where apps feel profoundly human—so present and gentle you could swear they almost breathe."
+> The model may propose an action. The application remains in control of whether and how it runs.
 
-Nura offers a cohesive toolchain—runtime, intent engine, client SDKs, and UI adapters—that makes agent-driven experiences feel natural without sacrificing guardrails.
+## Status
 
----
+Nura.js is in **Developer Preview**. The agent bridge, runtime authorization, permission evaluator, semantic DOM, and HTTP security modules have enforced 100% line, function, and branch coverage. This does not mean that the entire monorepo has 100% coverage or that the bundled in-memory services are ready for a globally distributed production deployment.
 
-## Table of Contents
+See [Production readiness](./docs/internals/production-readiness.md) for the implemented guarantees and remaining release work.
 
-- [Why Nura.js](#why-nurajs)
-- [Architecture at a Glance](#architecture-at-a-glance)
-- [Quick Start](#quick-start)
-- [Usage in Your Stack](#usage-in-your-stack)
-- [Core Capabilities](#core-capabilities)
-- [Ecosystem Packages](#ecosystem-packages)
-- [Documentation](#documentation)
-- [Community & Support](#community--support)
-- [Security](#security)
-- [License](#license)
+## Why Nura
 
----
+- **One execution boundary** — UI events, voice commands, MCP calls, and LLM tools can use the same validation, authorization, confirmation, audit, and telemetry path.
+- **Provider-neutral** — connect OpenAI Responses, OpenAI Chat Completions, Anthropic, MCP, or a custom agent protocol.
+- **Context-aware** — give agents a compact, sanitized semantic snapshot instead of raw DOM nodes or uncontrolled browser automation.
+- **Framework-agnostic** — use the same action runtime with React, Vue, Svelte, or DOM-first applications.
+- **Secure defaults** — agent actions are opt-in, production policies can default-deny, server confirmations fail closed, HTTP identity is trusted only from the host, and secret-like fields are redacted.
+- **Multilingual** — locale-aware lexicons, numerals, synonyms, fuzzy matching, wake words, and voice utilities remain modular.
 
-## Why Nura.js
+## Architecture
 
-- **Agent-native** — structure natural language into deterministic intents and actions.
-- **Framework-agnostic** — ship React, Vue, Svelte, or DOM-first interfaces with the same agent brain.
-- **Production ready** — policies, approvals, idempotency, telemetry, and rate limiting are built-in.
-- **Multilingual** — locale-aware numerals, synonyms, wake-word handling, and lexicon utilities.
+```text
+AI agent / LLM / voice / UI event
+                 │
+                 ▼
+       Provider adapter or client
+                 │
+                 ▼
+        Nura typed action runtime
+        ├─ payload validation
+        ├─ roles and conditions
+        ├─ confirmation / approval
+        ├─ audit and telemetry
+        └─ deterministic dispatch
+                 │
+                 ▼
+       React / Vue / Svelte / DOM
+```
 
-## Architecture at a Glance
+| Package | Responsibility |
+| --- | --- |
+| `@nura-js/core` | Typed actions, permissions, agent bridge, context, i18n, lexicon, and telemetry. |
+| `@nura-js/intents` | Intent validation, approvals, execution, and audit contracts. |
+| `@nura-js/client` | Browser and hybrid client for intent dispatch. |
+| `@nura-js/react` | React providers, hooks, and semantic components. |
+| `@nura-js/vue` | Vue plugin, composables, and directives. |
+| `@nura-js/svelte` | Svelte stores, actions, and components. |
+| `@nura-js/transport-http` | Authenticated, policy-aware HTTP transport for server-side intent flows. |
+| `@nura-js/dom` | SSR-safe semantic DOM scanning and indexing. |
+| `@nura-js/plugin-voice` | Speech, wake-word, and locale-aware voice integration. |
+| `@nura-js/plugin-fuzzy` | Edit-distance and phonetic matching utilities. |
 
-The framework is organized into modular packages that work together:
-
-- **Core Runtime** (`@nura-js/core`) – Foundation for action execution, permissions, i18n, and NLP utilities.
-- **Intent System** (`@nura-js/intents`) – Structured intent definition, validation, approval workflows, and execution.
-- **Client SDK** (`@nura-js/client`) – HTTP client and UI dispatcher for intent-based interactions.
-- **Framework Adapters** (`@nura-js/react`, `@nura-js/vue`, `@nura-js/svelte`) – Framework-specific integrations.
-- **Transport Layer** (`@nura-js/transport-http`) – Secure HTTP endpoints with rate limiting.
-- **DOM Utilities** (`@nura-js/dom`) – DOM indexing and scanning for UI automation.
-
----
-
-## Quick Start
-
-### Requirements
-
-- Node.js ≥ 18.18.0
-- pnpm ≥ 8.15.0
-
-### Install the essentials
+## Install
 
 ```bash
-# Core runtime
 pnpm add @nura-js/core
 
-# Optional linguistic helpers
-pnpm add @nura-js/plugin-voice @nura-js/plugin-fuzzy
+# Choose the UI integrations needed by the application.
+pnpm add @nura-js/dom @nura-js/react
+# pnpm add @nura-js/vue
+# pnpm add @nura-js/svelte
 
-# Framework adapter (pick one)
-pnpm add @nura-js/react
-# or
-pnpm add @nura-js/vue
-# or
-pnpm add @nura-js/svelte
-
-# Intent + transport layer for backend flows
-pnpm add @nura-js/intents @nura-js/transport-http
-
-# Client SDK for browser-based dispatching
-pnpm add @nura-js/client
+# Optional server-side intent workflow.
+pnpm add @nura-js/intents @nura-js/transport-http @nura-js/client
 ```
 
-### Develop inside the monorepo
+## Define a protected action
 
-```bash
-# Install dependencies
-pnpm install
+```ts
+import { createRegistry, defineActionSpec } from '@nura-js/core'
 
-# Run development mode
-pnpm dev
-
-# Build every package
-pnpm build
-
-# Global type checking
-pnpm typecheck
-```
-
----
-
-## Usage in Your Stack
-
-### React (hooks-driven)
-
-```tsx
-import { NuraProvider, useNuraAction } from '@nura-js/react';
-import { createRegistry, defineActionSpec } from '@nura-js/core';
-
-const registry = createRegistry({
-  config: { app: { id: 'orders-app', locale: 'en-US' } },
+export const registry = createRegistry({
+  config: {
+    app: { id: 'orders-app', locale: 'en-US' },
+    defaultPolicy: 'deny',
+    actor: () => ({
+      id: currentUser.id,
+      tenant: currentTenant.id,
+      roles: currentUser.roles,
+      via: 'user',
+    }),
+  },
+  permissions: {
+    scopes: {
+      orders: {
+        open: { policy: 'allow', roles: ['support', 'admin'] },
+      },
+    },
+  },
   specs: [
     defineActionSpec({
       name: 'open_orders',
       type: 'open',
       target: 'orders',
       phrases: { 'en-US': { canonical: ['open orders'] } },
+      inputSchema: {
+        type: 'object',
+        properties: {
+          filter: { type: 'string', enum: ['today', 'overdue', 'all'] },
+        },
+        additionalProperties: false,
+      },
+      validate: (payload) =>
+        payload?.filter === undefined ||
+        ['today', 'overdue', 'all'].includes(String(payload.filter)),
+      meta: {
+        agent: true,
+        desc: 'Open the orders workspace with an optional filter',
+      },
     }),
   ],
-});
-
-export function App() {
-  return (
-    <NuraProvider registry={registry}>
-      <OrdersButton />
-    </NuraProvider>
-  );
-}
-
-function OrdersButton() {
-  const { execute } = useNuraAction({
-    type: 'open',
-    target: 'orders',
-    handler: () => console.log('Opening orders…'),
-  });
-
-  return <button onClick={() => execute()}>Open Orders</button>;
-}
+  routes: {
+    'open::orders': (payload) => {
+      router.navigate(`/orders?filter=${payload?.filter ?? 'all'}`)
+      return { ok: true }
+    },
+  },
+})
 ```
 
-### Vue (composition API)
+`meta.agent: true` exposes the action through the agent bridge. Unmarked actions remain private to the host application.
+
+## Connect any LLM or agent
+
+Nura does not own model credentials, prompts, networking, or conversation state. The host sends provider-formatted tools and sanitized context to its chosen model, then routes returned tool calls through Nura.
 
 ```ts
-import { createApp } from 'vue';
-import { createNuraPlugin, useNura } from '@nura-js/vue';
-import { createRegistry } from '@nura-js/core';
+import {
+  Nura,
+  createAgentBridge,
+  createUiContext,
+  openAIResponsesAgentAdapter,
+} from '@nura-js/core'
+import { DOMIndexer } from '@nura-js/dom'
 
-const registry = createRegistry({
-  config: { app: { id: 'orders-app', locale: 'en-US' } },
-});
+const nura = new Nura({ registry })
+const indexer = new DOMIndexer()
 
-const app = createApp({
-  setup() {
-    const nura = useNura();
-    const execute = () => nura.act({ type: 'open', target: 'orders' });
-    return { execute };
-  },
-});
-
-app.use(createNuraPlugin({ registry }));
-app.mount('#app');
-```
-
-### Node (intent pipeline)
-
-```ts
-import { registerType, createIntent, approveIntent } from '@nura-js/intents';
-
-registerType({
-  type: 'orders.create',
-  schema: {
-    type: 'object',
-    required: ['id'],
-    properties: { id: { type: 'string' } },
-  },
-  mapper: (payload) => ({
-    type: 'ui.open',
-    payload,
-    uiHint: { target: 'orderForm' },
+const bridge = createAgentBridge({
+  registry,
+  execute: (action) => nura.act(action),
+  context: () => ({
+    route: window.location.pathname,
+    ui: createUiContext(indexer.getAll()),
   }),
-});
+})
 
-const { id } = await createIntent({
-  type: 'orders.create',
-  payload: { id: 'o-100' },
-});
-
-await approveIntent(id);
+const tools = bridge.formatTools(openAIResponsesAgentAdapter)
+const context = await bridge.serializeContext()
+const invocation = await bridge.invoke(toolCall, openAIResponsesAgentAdapter)
 ```
 
----
+Built-in adapters:
 
-## Core Capabilities
+- `openAIResponsesAgentAdapter`
+- `openAIChatCompletionsAgentAdapter`
+- `anthropicAgentAdapter`
+- `mcpAgentAdapter`
+- `genericAgentAdapter`
 
-### Intent Engine (`@nura-js/intents`)
+Implement `NuraAgentAdapter` for AG-UI, Vercel AI SDK, LangGraph, Mastra, internal orchestrators, or future protocols. See the [Agent bridge guide](./docs/guide/agent-bridge.md).
 
-- Complete Intent → Approval → Execute (IAE) lifecycle.
-- JSON Schema validation powered by Ajv.
-- Policy hooks for role-, tenant-, and predicate-based approvals.
-- Built-in queues for human approvals and audit logging.
-- Idempotent retries and rate limiting to protect critical paths.
+## Security defaults
 
-### Wake & Language Processing (`@nura-js/core/wake` and friends)
+1. Agent-visible actions are opt-in.
+2. Agent execution should use `action => nura.act(action)`, never a raw handler.
+3. Production applications should use `defaultPolicy: 'deny'` and explicitly authorize each action.
+4. Tool schemas improve model output but are not a security boundary; validate payloads in Nura and again in the domain service.
+5. Destructive, financial, privacy-sensitive, or irreversible operations should require explicit approval.
+6. Server-side confirmation fails closed unless the host supplies `config.confirm`.
+7. UI context excludes text and metadata by default, removes prototype-pollution keys, redacts common secret fields, and enforces depth, string, array, element, and byte limits.
+8. Provider credentials and trusted actor roles belong on the server.
+9. The HTTP transport requires an authentication callback by default and fails closed for intent reads and approvals unless the host supplies an ownership/approval authorizer.
 
-- Damerau-Levenshtein and Soundex fuzzy matching.
-- Alias and prefix support ("ok", "okay", "okey").
-- Locale-aware numeral parsing and synonym normalization.
-- Entity extraction helpers for booleans, enums, dates, numbers, and ranges.
+## Verification
 
-### Context Management (`@nura-js/core/context`)
+```bash
+pnpm install --frozen-lockfile
+pnpm typecheck
+pnpm build
+pnpm test
+pnpm test:coverage # Node.js 22+
+pnpm smoke
+```
 
-- Persist the last action for confirmation or replay.
-- Detect confirmation phrases like "yes", "ok", "si", "dale".
-- Rehydrate context for follow-up agent interactions.
-
-### Internationalization (`@nura-js/core/i18n`)
-
-- Namespaced message bundles for common, actions, and UI copy.
-- Fallback locale chains and runtime registration.
-- Variable interpolation for dynamic phrases.
-
-### Lexicon System (`@nura-js/core/lexicon`)
-
-- Normalize terminology into canonical representations.
-- Locale-specific dictionaries with phonetic similarity checks.
-- Batch registration APIs for large vocabularies.
-
-### Action System (`@nura-js/core`)
-
-- Register and dispatch actions with modern (`type/target`) or legacy (`verb/scope`) styles.
-- Scope- and role-based permission checks.
-- Confirmation hooks and telemetry events for observability.
-
-### Framework Adapters
-
-- Provider components to inject registries into React, Vue, and Svelte apps.
-- Hooks like `useNura`, `useNuraAction`, and `useNuraPermission` to wire UI events.
-- Declarative helpers (`NuraElement`, `NuraButton`) that align component actions with intents.
-
----
-
-## Ecosystem Packages
-
-| Package | Description |
-| --- | --- |
-| `@nura-js/core` | Runtime, permissions, NLP utilities, i18n, lexicon, telemetry. |
-| `@nura-js/intents` | Define, validate, approve, and execute intents with guardrails. |
-| `@nura-js/client` | Unified client SDK with dispatchers and transport helpers. |
-| `@nura-js/react` | React provider, hooks, and components for agent-driven UIs. |
-| `@nura-js/vue` | Vue plugin and composition helpers. |
-| `@nura-js/svelte` | Svelte stores and components for Nura actions. |
-| `@nura-js/transport-http` | Hardened HTTP endpoints for ingesting intents. |
-| `@nura-js/dom` | DOM scanning/indexing utilities for UI automation. |
-
----
+CI verifies Node.js 18.18, 20, 22, and 24. The 100% critical gate covers the agent bridge, runtime authorization, permission evaluator, semantic DOM indexer/scanner, action-verb parser, and HTTP authentication/authorization boundary.
 
 ## Documentation
 
-- **Getting Started**: [docs/getting-started.md](./docs/getting-started.md)
-- **Concepts Overview**: [docs/guide/concepts.md](./docs/guide/concepts.md)
-- **Full Documentation**: [docs/index.md](./docs/index.md)
-- **API Reference**: [docs/api/](./docs/api/)
-- **Guides**: [docs/guide/](./docs/guide/)
-- **Architecture**: [docs/internals/architecture.md](./docs/internals/architecture.md)
+- [Getting started](./docs/getting-started.md)
+- [Concepts](./docs/guide/concepts.md)
+- [Agent bridge](./docs/guide/agent-bridge.md)
+- [Architecture](./docs/internals/architecture.md)
+- [Production readiness](./docs/internals/production-readiness.md)
+- [Roadmap](./docs/community/roadmap.md)
+- [API reference](./docs/api/)
 
-## Community & Support
+## Community and security
 
-- **GitHub**: [https://github.com/nura-ia/nurajs](https://github.com/nura-ia/nurajs)
-- **Issues**: [https://github.com/nura-ia/nurajs/issues](https://github.com/nura-ia/nurajs/issues)
-- **Website**: [https://nura.dev](https://nura.dev)
-
-## Security
-
-- **Vulnerability Reports**: [security@nura.dev](mailto:security@nura.dev)
-- **Security Policy**: [SECURITY.md](./SECURITY.md)
+- [Issues](https://github.com/nura-ia/nura.js/issues)
+- [Repository](https://github.com/nura-ia/nura.js)
+- Website: [nura.dev](https://nura.dev)
+- Security reports: [security@nura.dev](mailto:security@nura.dev)
+- [Security policy](./SECURITY.md)
 
 ## License
 
-MIT License — see [LICENSE](./LICENSE) for details.
-
----
-
-**"Create a world where apps feel profoundly human—so present and gentle you could swear they almost breathe."**
+MIT — see [LICENSE](./LICENSE).

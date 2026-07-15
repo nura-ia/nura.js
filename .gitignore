@@ -1,4 +1,4 @@
-# Node / PNPM / TS / Build
+# Node / PNPM / TypeScript / build
 node_modules/
 .pnpm-store/
 .pnp.*
@@ -12,18 +12,19 @@ out/
 .eslintcache
 .turbo/
 coverage/
+.coverage-dist/
 .parcel-cache/
 
-# PNPM packs / artefactos locales
+# Local package artifacts
 .packs/
 
-# Editores / SO
+# Editors / operating systems
 .vscode/
 .idea/
 .DS_Store
 Thumbs.db
 
-# Vite / Next / SvelteKit / VitePress / Typedoc
+# Framework and documentation output
 .vite/
 .next/
 .svelte-kit/
@@ -31,9 +32,9 @@ docs/.vitepress/cache/
 docs/.vitepress/dist/
 typedoc/
 
-# Changesets (estado temporal de pre-release)
+# Changesets temporary prerelease state
 .changeset/pre.json
 
-# Sandboxes / tmp
+# Sandboxes / temporary files
 .sandbox/
 tmp/

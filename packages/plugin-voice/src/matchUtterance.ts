@@ -12,7 +12,6 @@ import type {
   NEntityDef,
   NLocale,
 } from '@nura-js/core'
-import { toNumberLoose } from '@nura-js/core/numerals'
 
 import type {
   IntentMatchResult,
@@ -266,14 +265,12 @@ function matchEntityValue(
   const trimmed = raw.trim()
   switch (ent.type) {
     case 'boolean': {
-      const value = parseBoolean(trimmed, { locale })
+      const value = parseBoolean(trimmed)
       return value === undefined ? { value: undefined, confidence: 0 } : { value, confidence: 1 }
     }
     case 'number': {
       const numeric = parseNumber(trimmed)
       if (numeric != null) return { value: numeric, confidence: 1 }
-      const loose = toNumberLoose(trimmed, locale)
-      if (loose != null) return { value: loose, confidence: 0.85 }
       return { value: undefined, confidence: 0 }
     }
     case 'enum': {
@@ -291,11 +288,11 @@ function matchEntityValue(
       return { value: fuzzy.candidate, confidence: fuzzy.score }
     }
     case 'date': {
-      const value = parseDate(trimmed, { locale })
+      const value = parseDate(trimmed)
       return value ? { value, confidence: 1 } : { value: undefined, confidence: 0 }
     }
     case 'range_number': {
-      const value = parseRangeNumber(trimmed, { locale })
+      const value = parseRangeNumber(trimmed)
       return value ? { value, confidence: 1 } : { value: undefined, confidence: 0 }
     }
     case 'string':

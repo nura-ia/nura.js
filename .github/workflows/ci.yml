@@ -2,7 +2,9 @@ name: nura-ci
 
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,47 +14,81 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  quality:
+    name: Quality / Node ${{ matrix.node }}
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [18.18.0, 20.x, 22.x, 24.x]
     env:
       CI: true
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
         with:
           version: 8.15.0
           run_install: false
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: ${{ matrix.node }}
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - name: Print versions
         run: |
           node -v
           pnpm -v
 
-      - name: Restore PNPM store cache
-        uses: actions/cache@v4
+      - name: Install from lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck workspace
+        run: pnpm typecheck
+
+      - name: Build workspace
+        run: pnpm build
+
+      - name: Run package tests
+        run: pnpm test
+
+      - name: Run release smoke test
+        run: pnpm smoke
+
+  critical-coverage:
+    name: Critical runtime coverage / 100%
+    runs-on: ubuntu-latest
+    needs: quality
+    timeout-minutes: 20
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
         with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
+          version: 8.15.0
+          run_install: false
 
-      - name: Install (frozen)
-        run: pnpm install --no-frozen-lockfile
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22.x
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
-      - name: Typecheck (workspace)
-        run: pnpm -w run typecheck
+      - name: Install from lockfile
+        run: pnpm install --frozen-lockfile
 
-      - name: Build (workspace)
-        run: pnpm -w run build
-
-      - name: Smoke
-        run: pnpm run smoke
+      - name: Enforce 100% critical coverage
+        run: pnpm test:coverage

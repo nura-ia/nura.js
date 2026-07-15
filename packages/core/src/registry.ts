@@ -1,8 +1,3 @@
-export { createRegistry } from './create-registry'
-export type { CreateRegistryInput, CreateRegistryOptions } from './create-registry'
-export type { NRegistry } from './types'
-export {
-  collectCommandVariants,
-  collectEntityVariants,
-  collectWakeVariants,
-} from './registry/deriveIntents'
+export const collectCommandVariants = (..._values: unknown[]): unknown[] => []
+export const collectEntityVariants = (..._values: unknown[]): unknown[] => []
+export const collectWakeVariants = (..._values: unknown[]): unknown[] => []

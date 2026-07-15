@@ -3,17 +3,44 @@ import { SearchPlugin } from 'vitepress-plugin-search'
 
 const sharedHead: HeadConfig[] = [
   ['meta', { name: 'theme-color', content: '#2563eb' }],
-  ['meta', { name: 'description', content: 'Nura.js is the universal framework for voice copilots and automation-friendly experiences.' }],
+  [
+    'meta',
+    {
+      name: 'description',
+      content:
+        'Nura.js is the typed runtime that connects AI agents, LLM tools, voice, and existing web interfaces.',
+    },
+  ],
   ['link', { rel: 'icon', href: '/assets/nura-logo.svg' }],
   ['link', { rel: 'manifest', href: '/manifest.json' }],
   ['meta', { property: 'og:title', content: 'Nura.js Documentation' }],
-  ['meta', { property: 'og:description', content: 'Build accessible voice and automation copilots with Nura.js.' }],
+  [
+    'meta',
+    {
+      property: 'og:description',
+      content:
+        'Build safe, context-aware agent experiences on React, Vue, Svelte, and the DOM.',
+    },
+  ],
   ['meta', { property: 'og:type', content: 'website' }],
   ['meta', { property: 'og:url', content: 'https://docs.nura.dev' }],
-  ['meta', { property: 'og:image', content: 'https://docs.nura.dev/assets/nura-logo.svg' }],
+  [
+    'meta',
+    {
+      property: 'og:image',
+      content: 'https://docs.nura.dev/assets/nura-logo.svg',
+    },
+  ],
   ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
   ['meta', { name: 'twitter:title', content: 'Nura.js Documentation' }],
-  ['meta', { name: 'twitter:description', content: 'Build accessible voice and automation copilots with Nura.js.' }],
+  [
+    'meta',
+    {
+      name: 'twitter:description',
+      content:
+        'Connect AI agents to existing web applications through typed actions and deterministic policies.',
+    },
+  ],
   ['link', { rel: 'canonical', href: 'https://docs.nura.dev' }],
 ]
 
@@ -34,6 +61,7 @@ const enSidebar: DefaultTheme.Sidebar = {
       items: [
         { text: 'Introduction', link: '/guide/introduction' },
         { text: 'Getting Started', link: '/guide/getting-started' },
+        { text: 'Agent Bridge', link: '/guide/agent-bridge' },
       ],
     },
   ],
@@ -57,6 +85,7 @@ const enSidebar: DefaultTheme.Sidebar = {
       text: 'Internals',
       items: [
         { text: 'Architecture', link: '/internals/architecture' },
+        { text: 'Production Readiness', link: '/internals/production-readiness' },
         { text: 'MCP Integration', link: '/internals/mcp' },
       ],
     },
@@ -121,8 +150,8 @@ const sharedNavEn: DefaultTheme.NavItem[] = [
   { text: 'Home', link: '/' },
   { text: 'Modules', link: '/modules/intents' },
   { text: 'Guide', link: '/guide/introduction' },
+  { text: 'Agent Bridge', link: '/guide/agent-bridge' },
   { text: 'API', link: '/api/' },
-  { text: 'Examples', link: '/tutorials/recipes' },
   { text: 'Community', link: '/community/roadmap' },
   { text: 'Changelog', link: '/changelog/' },
 ]
@@ -138,7 +167,8 @@ const sharedNavEs: DefaultTheme.NavItem[] = [
 
 export default defineConfig({
   title: 'Nura.js',
-  description: 'Universal framework for voice copilots and automation AI experiences.',
+  description:
+    'Typed runtime for safe, context-aware AI agent actions in web applications.',
   lang: 'en-US',
   lastUpdated: true,
   cleanUrls: true,
@@ -172,9 +202,12 @@ export default defineConfig({
     outline: [2, 3],
     lastUpdatedText: 'Last updated',
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/nura-ai/nura' },
-      { icon: { svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2Zm.1 3.3c-.9 0-1.6.7-1.6 1.6v6.7c0 .9.7 1.6 1.6 1.6h3.2c.9 0 1.6-.7 1.6-1.6V6.9c0-.9-.7-1.6-1.6-1.6Zm-4.6 2.4c-.6 0-1.1.5-1.1 1.1v7.8c0 .6.5 1.1 1.1 1.1h3.4c.6 0 1.1-.5 1.1-1.1v-7.8c0-.6-.5-1.1-1.1-1.1Z"/></svg>' },
-        link: 'https://www.npmjs.com/org/nura',
+      { icon: 'github', link: 'https://github.com/nura-ia/nura.js' },
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.5 0 10 4.5 10 10s-4.5 10-10 10S2 17.5 2 12 6.5 2 12 2Zm.1 3.3c-.9 0-1.6.7-1.6 1.6v6.7c0 .9.7 1.6 1.6 1.6h3.2c.9 0 1.6-.7 1.6-1.6V6.9c0-.9-.7-1.6-1.6-1.6Zm-4.6 2.4c-.6 0-1.1.5-1.1 1.1v7.8c0 .6.5 1.1 1.1 1.1h3.4c.6 0 1.1-.5 1.1-1.1v-7.8c0-.6-.5-1.1-1.1-1.1Z"/></svg>',
+        },
+        link: 'https://www.npmjs.com/org/nura-js',
       },
     ],
     footer: {

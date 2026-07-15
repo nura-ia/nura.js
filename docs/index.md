@@ -1,222 +1,138 @@
 ---
-title: "Nura.js — The Agent-UI Bridge"
-description: "A next-generation framework that synchronizes your AI agents and user interfaces, built for the multimodal web."
+title: "Nura.js — The Typed Agent–UI Runtime"
+description: "A typed and policy-aware runtime for connecting AI agents, LLM tools, voice, and existing web interfaces."
 ---
 
-# ✨ Nura.js — The Agent-UI Bridge
+# Nura.js — The Typed Agent–UI Runtime
 
-[![npm](https://img.shields.io/npm/v/@nura-js/core.svg?label=%40nura-js%2Fcore)](https://www.npmjs.com/package/@nura-js/core)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+Nura.js makes existing web applications safely controllable by AI agents, LLM tool calls, voice, and normal UI events.
 
-**Nura.js** is a next-generation toolkit that brings your **AI agents** and **UI layers** into perfect harmony.
-It handles fuzzy and phonetic matching, intent mapping, context flow, and multimodal adapters — empowering your interfaces to *listen, understand, and act*.
+It converts application capabilities into typed actions, provides a bounded semantic representation of the active interface, and routes execution through deterministic validation, permissions, confirmation, audit, and telemetry.
 
-> “Create a world where apps feel profoundly human—so present and gentle you could swear they almost breathe.”
-> — *Billy Rojas, Creator of Nura.js*
+> The model may propose an action. The application remains in control of whether and how it runs.
 
-## 🌌 About Nura
+## Developer Preview
 
-Born from the fusion of *nur* (Arabic for light) and *pneuma* (Greek for breath), Nura.js champions interfaces that feel alive. It channels Billy Rojas’s vision into a bridge that spans roots in Costa Rica🇨🇷 and the innovation currents reaching Tatarstan, crafting tools for teams who want agents to feel truly present.
+Nura.js is currently in Developer Preview. Critical agent, authorization, semantic DOM, and HTTP security modules have enforced 100% line, function, and branch coverage. Production deployments still need durable storage, distributed controls, trusted identity, and an observability backend.
 
-## 🚀 Core Features
+## Core capabilities
 
-- **Intent Engine** — Define, validate, and approve structured intents across agents and services.
-- **Wake & Voice Tools** — Strip wake words, parse numerals, and harmonize phonetics for natural conversations.
-- **Locale Intelligence** — Handle multilingual synonyms, numerals, and cultural nuances out of the box.
-- **Reactive Context** — Persist, confirm, and replay context with lightweight storage primitives.
-- **UI Adapters** — Drop-in bridges for React, Vue, and Svelte to sync agent actions with components.
+- Provider-neutral tools for OpenAI Responses, OpenAI Chat Completions, Anthropic, MCP, and custom agents.
+- Opt-in exposure of application actions to models.
+- Shared authorization for agent calls and framework adapter execution.
+- Role, condition, deny, and confirmation policies.
+- Fail-closed server-side confirmation.
+- Authenticated HTTP intents with trusted identity and explicit approval authorization.
+- SSR-safe semantic DOM scanning.
+- Sanitized, size-bounded UI context without raw DOM serialization.
+- React, Vue, Svelte, and DOM-first integrations.
+- Multilingual lexicon, fuzzy matching, wake-word, numeral, and voice utilities.
+- Intent → Approval → Execute workflows for server operations.
 
-## 🧠 Nura Intents — AI ↔ Backend Bridge
+## Install
 
-Nura Intents formalizes the IAE lifecycle — **Intent → Approval → Execute** — so agents operate with clear guardrails.
+```bash
+pnpm add @nura-js/core
+pnpm add @nura-js/dom @nura-js/react
+```
 
-```json
-{
-  "type": "create_order",
-  "payload": {
-    "items": ["espresso", "croissant"],
-    "customerId": "usr_123",
-    "notes": "rush order"
+Choose `@nura-js/vue` or `@nura-js/svelte` where appropriate. Add `@nura-js/intents`, `@nura-js/transport-http`, and `@nura-js/client` for server-side intent workflows.
+
+## Define an agent-visible action
+
+```ts
+import { createRegistry, defineActionSpec } from '@nura-js/core'
+
+export const registry = createRegistry({
+  config: {
+    app: { id: 'orders', locale: 'en-US' },
+    defaultPolicy: 'deny',
   },
-  "metadata": {
-    "locale": "en-US",
-    "confidence": 0.91
-  }
-}
+  permissions: {
+    scopes: {
+      orders: {
+        open: { policy: 'allow' },
+      },
+    },
+  },
+  specs: [
+    defineActionSpec({
+      name: 'open_orders',
+      type: 'open',
+      target: 'orders',
+      phrases: { 'en-US': { canonical: ['open orders'] } },
+      meta: {
+        agent: true,
+        desc: 'Open the orders workspace',
+      },
+    }),
+  ],
+})
 ```
 
-Model intents with JSON Schema, gate them behind human or policy approvals, and feed deterministic results into your UI dispatcher.
+`meta.agent: true` exposes the action to the agent bridge. Actions are private to the host application by default.
 
-## 🌐 Nura Transport — Secure, Universal Endpoints
-
-- Harden intent ingestion with schema validation on every request.
-- Apply adaptive rate limiting tuned for agent bursts and human fallbacks.
-- Serialize and normalize JSON responses with locale-aware metadata.
-
-## 🧭 Nura Client — Unified SDK + Dispatcher
-
-The client SDK unifies transport calls, intent status polling, and UI dispatching into one ergonomic API.
+## Connect an agent
 
 ```ts
-import { NuraClient } from '@nura-js/client';
+import {
+  Nura,
+  createAgentBridge,
+  createUiContext,
+  openAIResponsesAgentAdapter,
+} from '@nura-js/core'
+import { DOMIndexer } from '@nura-js/dom'
 
-const client = new NuraClient({ baseUrl: '/ai' });
+const nura = new Nura({ registry })
+const indexer = new DOMIndexer()
 
-client.on('intent', (intent) => {
-  console.log('Intent received:', intent.type);
-});
+const bridge = createAgentBridge({
+  registry,
+  execute: (action) => nura.act(action),
+  context: () => ({
+    route: window.location.pathname,
+    ui: createUiContext(indexer.getAll()),
+  }),
+})
 
-await client.dispatch({
-  type: 'create_order',
-  payload: { items: ['espresso'] },
-});
+const tools = bridge.formatTools(openAIResponsesAgentAdapter)
+const context = await bridge.serializeContext()
+const invocation = await bridge.invoke(toolCall, openAIResponsesAgentAdapter)
 ```
 
-## ⚙️ Quick Start
+Nura does not own model credentials or conversation state. The host sends `tools` and `context` to the selected provider, then passes returned tool calls to `bridge.invoke`.
 
-- Requirements: Node.js ≥ 18.18, pnpm ≥ 8.
-- Install core + optional plugins:
+## Security model
 
-  ```bash
-  pnpm add @nura-js/core
-  pnpm add @nura-js/plugin-voice @nura-js/plugin-fuzzy  # optional packages
-  pnpm add @nura-js/react  # or: pnpm add @nura-js/vue / pnpm add @nura-js/svelte
-  ```
+- Treat tool calls and model output as untrusted.
+- Use `defaultPolicy: 'deny'` in production.
+- Validate sensitive payloads in the action spec and domain service.
+- Execute tools through `Nura.act`.
+- Require human approval for destructive, financial, or privacy-sensitive operations.
+- Keep model credentials and trusted actor roles on the server.
+- Enable UI text or metadata only when required and classified for model use.
 
-- Monorepo workflow:
+## Learn more
 
-  ```bash
-  pnpm install
-  pnpm dev  # or: npm run dev / yarn dev
-  pnpm build  # or: npm run build / yarn build
-  ```
+- [Getting started](./getting-started.md)
+- [Concepts](./guide/concepts.md)
+- [Agent bridge](./guide/agent-bridge.md)
+- [Architecture](./internals/architecture.md)
+- [Production readiness](./internals/production-readiness.md)
+- [Roadmap](./community/roadmap.md)
+- [API reference](./api/)
 
-## 💡 Minimal Example
-
-```ts
-import { stripWake } from '@nura-js/core/wake';
-import { parseNumeral } from '@nura-js/core/numerals';
-import { normalizeSynonyms } from '@nura-js/core/synonyms';
-import { ContextManager } from '@nura-js/core/context';
-
-const text = stripWake('ok nora open orders menu', {
-  aliases: ['nora', 'lura', 'nula'],
-  minConfidence: 0.7,
-});
-// → "open orders menu"
-
-const id = parseNumeral('fifteen', 'en'); // → 15
-const normalized = normalizeSynonyms('open the orders menu', 'en');
-// → normalizes synonyms per locale dictionary
-
-const ctx = new ContextManager();
-ctx.save({ type: 'delete', target: 'order', payload: { id } });
-const next = ctx.maybeConfirm('yes, delete it');
-// → { type: 'delete', target: 'order', payload: { id: 15 } }
-```
-
-## 🧩 Adapters Matrix
-
-| Adapter | Package | Quick usage |
-| --- | --- | --- |
-| React | `@nura-js/react` | ```tsx
-import { NuraProvider, useNuraCommand } from '@nura-js/react';
-
-export function App() {
-  useNuraCommand('open-cart', ({ context }) => {
-    console.log('Opening cart for', context?.userId);
-  });
-  return (
-    <NuraProvider>
-      <button data-nura-command="open-cart">Open cart</button>
-    </NuraProvider>
-  );
-}
-``` |
-| Vue 3 | `@nura-js/vue` | ```vue
-<script setup lang="ts">
-import { NuraProvider } from '@nura-js/vue';
-</script>
-
-<template>
-  <NuraProvider>
-    <button data-nura-command="open-cart">Open cart</button>
-  </NuraProvider>
-</template>
-``` |
-| Svelte | `@nura-js/svelte` | ```svelte
-<script lang="ts">
-  import { NuraProvider } from '@nura-js/svelte';
-</script>
-
-<NuraProvider>
-  <button data-nura-command="open-cart">Open cart</button>
-</NuraProvider>
-``` |
-
-## 🧱 Repository Structure
-
-```
-apps/
-packages/core
-packages/intents
-packages/transport-*
-packages/client
-packages/react | packages/vue | packages/svelte
-scripts/
-```
-
-## 🧪 Verification & Testing
-
-Run the release verification pipeline before shipping:
+## Contributing
 
 ```bash
-pnpm run verify:release
+pnpm install --frozen-lockfile
+pnpm typecheck
+pnpm build
+pnpm test
+pnpm test:coverage # Node.js 22+
+pnpm smoke
 ```
 
-## 🧰 Troubleshooting
+Report security issues privately to [security@nura.dev](mailto:security@nura.dev).
 
-| Issue | Fix |
-| --- | --- |
-| Node version mismatch | Use `corepack enable` and `corepack use pnpm@8`, ensure Node.js ≥ 18.18. |
-| Permission denied on scripts | Run `chmod +x scripts/*.mjs` before executing tooling. |
-| MCP transport blocked | Allow outbound requests to your MCP endpoint (e.g., enable localhost rules in your firewall). |
-
-## 🤝 Contributing
-
-We welcome contributions! Read the [Contributing Guide](../CONTRIBUTING.md), follow Conventional Commits (e.g., `feat: add approval policy`), and use the helper workflow:
-
-```bash
-pnpm -w run typecheck
-pnpm -w run build
-pnpm run smoke
-pnpm run verify:release
-```
-
-## 🔒 Security
-
-Report vulnerabilities privately to [security@nura.dev](mailto:security@nura.dev).
-
-## 🪪 License
-
-Released under the [MIT License](../LICENSE).
-
-## 🧭 Vision
-
-Nura.js is not just a framework; it’s the connective tissue for conversational, multimodal, and living software.
-
-## 🌅 Manifesto
-
-Let agents whisper and interfaces breathe.
-Let context flow like light through glass.
-**"Create a world where apps feel profoundly human—so present and gentle you could swear they almost breathe."**
-
-## 🌠 Stay Connected
-
-- Discord: [#](#)
-- GitHub: [https://github.com/nura-ia/nurajs](https://github.com/nura-ia/nurajs)
-- X / Twitter: [#](#)
-- Website: [https://nura.dev](https://nura.dev)
-
----
-Crafted by Billy Rojas • light (nur) • Costa Rica🇨🇷
+Nura.js is released under the [MIT License](../LICENSE).

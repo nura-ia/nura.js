@@ -1,18 +1,18 @@
 {
   "name": "@nura-js/transport-http",
   "version": "0.2.0",
-  "description": "Expose Nura intents over a hardened HTTP router with rate limiting and idempotency",
+  "description": "Expose Nura intents through authenticated, policy-aware HTTP endpoints",
   "type": "module",
   "sideEffects": false,
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nura-ia/nurajs.git",
+    "url": "https://github.com/nura-ia/nura.js.git",
     "directory": "packages/transport-http"
   },
-  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/transport-http",
+  "homepage": "https://github.com/nura-ia/nura.js/tree/main/packages/transport-http",
   "bugs": {
-    "url": "https://github.com/nura-ia/nurajs/issues"
+    "url": "https://github.com/nura-ia/nura.js/issues"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -33,18 +33,21 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts --treeshake",
     "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:coverage": "node -e \"require('node:fs').rmSync('.coverage-dist',{recursive:true,force:true})\" && tsc -p tsconfig.coverage.json && node -e \"require('node:fs').writeFileSync('.coverage-dist/package.json','{\\\"type\\\":\\\"commonjs\\\"}\\n')\" && node --test --experimental-test-coverage --test-coverage-include='.coverage-dist/security.js' --test-coverage-lines=100 --test-coverage-functions=100 --test-coverage-branches=100 test/coverage/critical.node.mjs"
   },
   "keywords": [
     "nura",
     "intents",
     "http",
     "express",
-    "ai"
+    "ai",
+    "security"
   ],
   "dependencies": {
     "@nura-js/intents": "workspace:*",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-rate-limit": "^8.5.2"
   },
   "engines": {
     "node": ">=18.18.0"

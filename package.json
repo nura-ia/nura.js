@@ -2,15 +2,15 @@
   "name": "nura",
   "version": "0.1.0",
   "private": true,
-  "description": "Make your app breathe - AI-friendly web applications",
+  "description": "Typed agent and UI runtime for safe AI-controllable web applications",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nura-ia/nurajs.git"
+    "url": "https://github.com/nura-ia/nura.js.git"
   },
-  "homepage": "https://github.com/nura-ia/nurajs",
+  "homepage": "https://github.com/nura-ia/nura.js",
   "bugs": {
-    "url": "https://github.com/nura-ia/nurajs/issues"
+    "url": "https://github.com/nura-ia/nura.js/issues"
   },
   "workspaces": [
     "packages/*",
@@ -19,6 +19,8 @@
   "scripts": {
     "build": "pnpm -r --filter \"!./apps/**\" --filter \"!./packages/examples/**\" run build",
     "typecheck": "pnpm -r --filter \"@nura-js/*\" --filter \"!@nura-js/examples\" run typecheck",
+    "test": "pnpm -r --if-present run test",
+    "test:coverage": "pnpm --filter @nura-js/core run test:coverage && pnpm --filter @nura-js/dom run test:coverage && pnpm --filter @nura-js/transport-http run test:coverage",
     "build:all": "pnpm -r run build",
     "typecheck:all": "pnpm -r run typecheck",
     "lint": "eslint .",
@@ -32,7 +34,7 @@
     "pack:each": "pnpm -r --filter \"@nura-js/*\" --filter \"!@nura-js/examples\" --filter \"!@nura-js/devtools-lexicon\" --workspace-concurrency=1 exec -- pnpm pack --pack-destination ../../.packs",
     "pack:ls": "node -e \"require('fs').readdirSync('.packs').forEach(f=>console.log(f))\"",
     "smoke": "node scripts/smoke.mjs",
-    "verify:release": "pnpm -w run typecheck && pnpm -w run build && pnpm run pack:clean && pnpm run pack:each && pnpm run smoke"
+    "verify:release": "pnpm typecheck && pnpm build && pnpm test && pnpm test:coverage && pnpm pack:clean && pnpm pack:each && pnpm smoke"
   },
   "dependencies": {
     "@nura-js/core": "workspace:*",
@@ -44,7 +46,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.454.0",
-    "next": "latest",
+    "next": "15.2.4",
     "react": "^19",
     "react-dom": "^19",
     "svelte": "latest",

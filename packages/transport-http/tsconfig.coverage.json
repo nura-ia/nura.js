@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "sourceMap": true,
+    "outDir": ".coverage-dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@nura-js/intents": ["test/types/intents.d.ts"]
+    }
+  },
+  "include": ["src/security.ts"]
+}

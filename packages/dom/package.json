@@ -1,17 +1,17 @@
 {
   "name": "@nura-js/dom",
   "version": "0.1.1",
-  "description": "DOM indexing and scanning for Nura.js",
+  "description": "SSR-safe semantic DOM indexing and scanning for Nura.js",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/nura-ia/nurajs.git",
+    "url": "https://github.com/nura-ia/nura.js.git",
     "directory": "packages/dom"
   },
-  "homepage": "https://github.com/nura-ia/nurajs/tree/main/packages/dom",
+  "homepage": "https://github.com/nura-ia/nura.js/tree/main/packages/dom",
   "bugs": {
-    "url": "https://github.com/nura-ia/nurajs/issues"
+    "url": "https://github.com/nura-ia/nura.js/issues"
   },
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -31,11 +31,15 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm,cjs --treeshake --clean",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test test/*.spec.mjs",
+    "test:coverage": "node -e \"require('node:fs').rmSync('.coverage-dist',{recursive:true,force:true})\" && tsc -p tsconfig.coverage.json && node -e \"require('node:fs').writeFileSync('.coverage-dist/package.json','{\\\"type\\\":\\\"commonjs\\\"}\\n')\" && node --test --experimental-test-coverage --test-coverage-include='.coverage-dist/indexer.js' --test-coverage-include='.coverage-dist/scanner.js' --test-coverage-include='.coverage-dist/verbs.js' --test-coverage-lines=100 --test-coverage-functions=100 --test-coverage-branches=100 test/coverage/critical.test.mjs"
   },
   "keywords": [
     "nura",
     "dom",
+    "semantic",
+    "agents",
     "indexing",
     "scanner"
   ],

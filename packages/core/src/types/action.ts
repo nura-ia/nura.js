@@ -1,23 +1,31 @@
 export type NActionMeta = {
-  /** Si la acción requiere confirmación explícita del usuario */
+  /** Require an explicit user or policy confirmation before dispatch. */
   requireConfirm?: boolean
-  /** Permisos o roles necesarios (genérico para no acoplar) */
+  /** Generic permission hints retained for adapter compatibility. */
   permissions?: string[] | string
-  /** Hint de prioridad para ranking */
+  /** Ranking priority hint. */
   priority?: 'soft' | 'normal' | 'hard'
-  /** Descripción amigable utilizada en telemetría o interfaces */
+  /** Human-readable description for tools, telemetry, and UI. */
   desc?: string
-  /** Confianza calculada para la coincidencia actual */
+  /** Confidence calculated by an adapter. */
   confidence?: number
-  /** Origen del match utilizado por adaptadores de voz */
+  /** Match origin used by voice and language adapters. */
   via?: 'exact' | 'phonetic' | 'global'
-  /** Hint del origen del wake word */
+  /** Wake-word match origin. */
   wakeVia?: string
-  /** Umbral sugerido para fuzzy matching */
+  /** Suggested fuzzy matching threshold. */
   confidenceThreshold?: number
-  /** Campos extra */
+  /** Expose this action through the agent bridge. Defaults to false. */
+  agent?: boolean
+  /** Optional JSON Schema used to describe model tool arguments. */
+  inputSchema?: Record<string, unknown>
+  /** Entity names that must be present in model tool arguments. */
+  requiredEntities?: string[]
+  /** Name of the agent tool that initiated this action. */
+  agentTool?: string
+  /** Provider or adapter that initiated this action. */
+  agentProvider?: string
   [key: string]: unknown
 }
 
-/** Alias semántico para el meta de los specs de acción */
 export type NActionSpecMeta = NActionMeta
