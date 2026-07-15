@@ -86,27 +86,28 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
     next()
   })
 
-  router.use(async (req, res, next) => {
-    try {
-      const allowed = await rateLimiter.check(`ip:${req.ip ?? 'unknown'}`)
-      if (!allowed) {
-        res.status(429).json({
-          error: 'rate_limited',
-          message: 'Too many requests',
-        })
-        return
-      }
-      next()
-    } catch (err) {
-      next(err)
-    }
-  })
+
+  function ipRateLimitMiddleware(req: Request, res: Response, next: NextFunction) {
+    rateLimiter.check(`ip:${req.ip ?? 'unknown'}`)
+      .then((allowed) => {
+        if (!allowed) {
+          res.status(429).json({
+            error: 'rate_limited',
+            message: 'Too many requests',
+          })
+        } else {
+          next()
+        }
+      })
+      .catch(next)
+  }
 
   const jsonParser = json({ limit: bodyLimit })
 
   router.post(
     '/ai/intents',
     enforceJsonContentType,
+    ipRateLimitMiddleware,
     authenticateOperation(security, principals),
     createRateLimitMiddleware(rateLimiter, principals, 'create'),
     jsonParser,
@@ -141,6 +142,7 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
   router.post(
     '/ai/intents/:id/approve',
     enforceJsonContentType,
+    ipRateLimitMiddleware,
     authenticateOperation(security, principals),
     createRateLimitMiddleware(rateLimiter, principals, 'approve'),
     jsonParser,
@@ -165,6 +167,7 @@ export function buildRouter(options: BuildRouterOptions = {}): Router {
 
   router.get(
     '/ai/intents/:id',
+    ipRateLimitMiddleware,
     authenticateOperation(security, principals),
     createRateLimitMiddleware(rateLimiter, principals, 'read'),
     authorizeOperation(security, principals, 'read'),
