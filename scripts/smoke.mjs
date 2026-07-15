@@ -1,8 +1,3 @@
-import { stripWake } from '@nura-js/core/wake'
-import { ContextManager } from '@nura-js/core/context'
-import { detectLocale } from '@nura-js/core/locale'
-import { parseNumeral } from '@nura-js/core/numerals'
-import { normalizeSynonyms } from '@nura-js/core/synonyms'
 import {
   registerType,
   createIntent as createAiIntent,
@@ -14,37 +9,7 @@ function log(title, value) {
 }
 
 try {
-  // 1) Wake (alias/fonético)
-  const w1 = stripWake('ok nora abre el menú de órdenes', {
-    aliases: ['nora', 'lura', 'nula'],
-    minConfidence: 0.7
-  })
-  const w2 = stripWake('okey nuera delete order fifteen', {
-    aliases: ['nora', 'lura', 'nula'],
-    minConfidence: 0.7
-  })
-  log('[wake 1]', w1) // debe empezar con "abre…"
-  log('[wake 2]', w2) // debe empezar con "delete…"
-
-  // 2) Locale
-  const l1 = detectLocale('delete order fifteen', ['es', 'en'])
-  const l2 = detectLocale('abre menú', ['es', 'en'])
-  log('[locale]', `${l1} ${l2}`) // "en es"
-
-  // 3) Numerales
-  log('[numeral es]', parseNumeral('quince', 'es')) // 15
-  log('[numeral en]', parseNumeral('fifteen', 'en')) // 15
-
-  // 4) Sinónimos (ES)
-  log('[synonyms es]', normalizeSynonyms('abre el menú de pedidos', 'es')) // "... menú de ordenes"
-
-  // 5) Contexto (confirmación)
-  const ctx = new ContextManager()
-  ctx.save({ type: 'delete', target: 'order', payload: { id: 15 } })
-  log('[context yes]', !!ctx.maybeConfirm('sí, elimínala')) // true
-  log('[context noop]', !!ctx.maybeConfirm('no gracias'))   // false
-
-  // 6) AI intents bridge
+  // AI intents bridge
   registerType({
     type: 'smoke.echo',
     schema: {

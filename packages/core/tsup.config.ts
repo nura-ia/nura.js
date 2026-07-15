@@ -3,6 +3,9 @@ import { defineConfig } from 'tsup'
 export default defineConfig({
   entry: {
     index: 'src/index.ts',
+    agent: 'src/agent.ts',
+    runtime: 'src/runtime.ts',
+    permissions: 'src/permissions.ts',
     wake: 'src/wake.ts',
     context: 'src/context.ts',
     locale: 'src/locale.ts',
@@ -11,7 +14,7 @@ export default defineConfig({
   },
   format: ['esm', 'cjs'],
   dts: true,
-  sourcemap: false,
+  sourcemap: true,
   clean: true,
   splitting: false,
   treeshake: true,

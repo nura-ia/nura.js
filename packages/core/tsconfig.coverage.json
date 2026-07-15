@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "sourceMap": true,
+    "outDir": ".coverage-dist",
+    "rootDir": "src"
+  },
+  "include": [
+    "src/agent.ts",
+    "src/runtime.ts",
+    "src/permissions.ts",
+    "src/create-registry.ts",
+    "src/actions.ts",
+    "src/i18n.ts",
+    "src/lexicon.ts",
+    "src/telemetry.ts",
+    "src/types.ts",
+    "src/types/action.ts"
+  ]
+}

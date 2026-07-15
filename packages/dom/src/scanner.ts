@@ -1,5 +1,5 @@
-import type { NuraElement, NuraVerb, NuraScope } from "@nura-js/core"
-import { parseVerbList } from "./verbs"
+import type { NuraElement, NuraScope, NuraVerb } from '@nura-js/core'
+import { parseVerbList } from './verbs'
 
 export interface ScanResult {
   elements: NuraElement[]
@@ -12,93 +12,110 @@ export interface ScanResult {
   }
 }
 
-export function scanDOM(root: HTMLElement = document.body): ScanResult {
+function defaultRoot(): HTMLElement | null {
+  return typeof document === 'undefined' ? null : document.body
+}
+
+function scopeCandidates(root: HTMLElement): HTMLElement[] {
+  const values: HTMLElement[] = []
+  if (root.hasAttribute('data-nu-scope')) values.push(root)
+  root
+    .querySelectorAll<HTMLElement>('[data-nu-scope]')
+    .forEach((element) => values.push(element))
+  return values
+}
+
+function actionCandidates(root: HTMLElement): HTMLElement[] {
+  const values: HTMLElement[] = []
+  if (root.hasAttribute('data-nu-listen') || root.hasAttribute('data-nu-act')) {
+    values.push(root)
+  }
+  root
+    .querySelectorAll<HTMLElement>('[data-nu-listen], [data-nu-act]')
+    .forEach((element) => values.push(element))
+  return values
+}
+
+export function scanDOM(root?: HTMLElement): ScanResult {
+  const resolvedRoot = root ?? defaultRoot()
   const elements: NuraElement[] = []
   const scopes = new Set<NuraScope>()
   const verbs = new Set<NuraVerb>()
   const byScope: Record<NuraScope, number> = {}
   const byVerb: Partial<Record<NuraVerb, number>> = {}
 
-  const nodeList = root.querySelectorAll("[data-nu-scope]")
+  if (resolvedRoot) {
+    for (const element of scopeCandidates(resolvedRoot)) {
+      const scope = element.getAttribute('data-nu-scope')
+      if (!scope) continue
+      const elementVerbs = Array.from(
+        new Set([
+          ...parseVerbList(element.getAttribute('data-nu-listen')),
+          ...parseVerbList(element.getAttribute('data-nu-act')),
+        ]),
+      )
+      if (elementVerbs.length === 0) continue
 
-  nodeList.forEach((node) => {
-    const element = node as HTMLElement
-    const scope = element.getAttribute("data-nu-scope")
-    if (!scope) return
+      let metadata: Record<string, unknown> = {}
+      const metadataValue = element.getAttribute('data-nu-meta')
+      if (metadataValue) {
+        try {
+          const parsed: unknown = JSON.parse(metadataValue)
+          if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+            metadata = parsed as Record<string, unknown>
+          }
+        } catch {
+          console.warn('[Nura] Failed to parse data-nu-meta')
+        }
+      }
 
-    const listenAttr = element.getAttribute("data-nu-listen")
-    const actAttr = element.getAttribute("data-nu-act")
-
-    const elementVerbs = [
-      ...parseVerbList(listenAttr),
-      ...parseVerbList(actAttr),
-    ]
-
-    if (elementVerbs.length === 0) return
-
-    let metadata: Record<string, any> = {}
-    const metaAttr = element.getAttribute("data-nu-meta")
-    if (metaAttr) {
-      try {
-        metadata = JSON.parse(metaAttr)
-      } catch (e) {
-        console.warn("[Nura] Failed to parse metadata:", metaAttr)
+      const indexed: NuraElement = {
+        id: element.id || `nu-${scope}-${elements.length}`,
+        scope,
+        verbs: elementVerbs,
+        element,
+        metadata,
+      }
+      elements.push(indexed)
+      scopes.add(scope)
+      byScope[scope] = (byScope[scope] ?? 0) + 1
+      for (const verb of elementVerbs) {
+        verbs.add(verb)
+        byVerb[verb] = (byVerb[verb] ?? 0) + 1
       }
     }
-
-    const nuraElement: NuraElement = {
-      id: element.id || `nu-${scope}-${elements.length}`,
-      scope,
-      verbs: elementVerbs,
-      element,
-      metadata,
-    }
-
-    elements.push(nuraElement)
-    scopes.add(scope)
-
-    elementVerbs.forEach((verb) => {
-      verbs.add(verb)
-      byVerb[verb] = (byVerb[verb] || 0) + 1
-    })
-
-    byScope[scope] = (byScope[scope] || 0) + 1
-  })
+  }
 
   return {
     elements,
     scopes,
     verbs,
-    stats: {
-      total: elements.length,
-      byScope,
-      byVerb,
-    },
+    stats: { total: elements.length, byScope, byVerb },
   }
 }
 
-export function findElementsByScope(scope: NuraScope, root: HTMLElement = document.body): HTMLElement[] {
-  return Array.from(root.querySelectorAll(`[data-nu-scope="${scope}"]`))
+export function findElementsByScope(
+  scope: NuraScope,
+  root?: HTMLElement,
+): HTMLElement[] {
+  const resolvedRoot = root ?? defaultRoot()
+  if (!resolvedRoot) return []
+  return scopeCandidates(resolvedRoot).filter(
+    (element) => element.getAttribute('data-nu-scope') === scope,
+  )
 }
 
-export function findElementsByVerb(verb: NuraVerb, root: HTMLElement = document.body): HTMLElement[] {
-  const elements: HTMLElement[] = []
-  const nodeList = root.querySelectorAll("[data-nu-listen], [data-nu-act]")
-
-  nodeList.forEach((node) => {
-    const element = node as HTMLElement
-    const listenAttr = element.getAttribute("data-nu-listen")
-    const actAttr = element.getAttribute("data-nu-act")
-
+export function findElementsByVerb(
+  verb: NuraVerb,
+  root?: HTMLElement,
+): HTMLElement[] {
+  const resolvedRoot = root ?? defaultRoot()
+  if (!resolvedRoot) return []
+  return actionCandidates(resolvedRoot).filter((element) => {
     const verbs = [
-      ...parseVerbList(listenAttr),
-      ...parseVerbList(actAttr),
+      ...parseVerbList(element.getAttribute('data-nu-listen')),
+      ...parseVerbList(element.getAttribute('data-nu-act')),
     ]
-
-    if (verbs.includes(verb)) {
-      elements.push(element)
-    }
+    return verbs.includes(verb)
   })
-
-  return elements
 }

@@ -23,6 +23,7 @@ export type NActionType =
   | 'increment'
 
 export type NLocale = string
+export type NJsonSchema = Record<string, unknown>
 
 export type NEntityType =
   | 'string'
@@ -42,7 +43,7 @@ export interface NEntityDef {
     ctx: { locale: NLocale; i18n: NI18n; lexicon: NLexicon },
   ) => unknown
   format?: (
-    val: unknown,
+    value: unknown,
     ctx: { locale: NLocale; i18n: NI18n; lexicon: NLexicon },
   ) => string
 }
@@ -64,12 +65,6 @@ export interface LegacyNuraAction {
 
 export type NAction = ModernNAction | LegacyNuraAction
 
-/**
- * Static metadata that can be declared alongside an {@link NActionSpec}.
- *
- * These fields are safe to define at registration time and are surfaced to
- * adapters such as voice interfaces for ranking, prompting and confirmation.
- */
 export interface NActionSpec {
   name: string
   type: NActionType
@@ -85,6 +80,7 @@ export interface NActionSpec {
     }
   >
   entities?: NEntityDef[]
+  inputSchema?: NJsonSchema
   validate?: (payload: Record<string, unknown> | undefined) => boolean
   aliases?: {
     wake?: string[]
@@ -103,10 +99,20 @@ export interface NAgent {
 
 export type NPolicy = 'deny' | 'allow' | 'confirm'
 
+export interface NPermissionConditionContext {
+  actor?: NActor
+  action?: NAction
+  scope?: string
+  actionType?: string
+}
+
 export interface NPermissionRule {
   roles?: string[]
   confirm?: boolean
   policy?: NPolicy
+  condition?: (
+    context: NPermissionConditionContext,
+  ) => boolean | Promise<boolean>
 }
 
 export interface NPermissions {
@@ -115,8 +121,10 @@ export interface NPermissions {
 
 export interface NActor {
   id?: string
+  tenant?: string
   roles?: string[]
   via?: 'user' | 'agent' | 'system'
+  metadata?: Record<string, unknown>
 }
 
 export interface NActionCatalog {
@@ -125,12 +133,18 @@ export interface NActionCatalog {
   register(spec: NActionSpec): void
 }
 
-export type NResult = { ok: boolean; message?: string }
+export type NResult = {
+  ok: boolean
+  message?: string
+  code?: string
+  data?: unknown
+}
 
 export type NConfirmFn = (ctx: {
   action: NAction
   scope?: string
   rule?: NPermissionRule
+  actor?: NActor
 }) => Promise<boolean> | boolean
 
 export interface NAudit {
@@ -140,6 +154,7 @@ export interface NAudit {
     scope?: string
     allowed: boolean
     reason?: string
+    result?: NResult
     timestamp: number
   }) => void
 }
@@ -148,6 +163,7 @@ export interface NConfig {
   app: { id: string; locale?: string }
   capabilities?: Partial<{ voice: boolean; rpa: boolean; analytics: boolean }>
   debug?: boolean
+  defaultPolicy?: NPolicy
   resolveScope?: (action: NAction) => string | undefined
   confirm?: NConfirmFn
   actor?: () => NActor | undefined
@@ -167,7 +183,7 @@ export interface NRegistry {
     verb: NActionType,
     scope: NuraScope,
     params?: Record<string, unknown>,
-  ): Promise<NResult | void> | void
+  ): Promise<NResult>
   on(type: NuraEventType, listener: NuraEventListener): () => void
   addPermission(permission: NuraPermission): void
   removePermission(scope: NuraScope): void
@@ -221,7 +237,9 @@ export type NuraEventType =
   | 'action:error'
   | 'permission:added'
   | 'permission:removed'
+  | 'permission:allowed'
   | 'permission:denied'
+  | 'runtime:started'
   | 'element:indexed'
   | 'element:removed'
 

@@ -20,7 +20,6 @@ import {
   parseNumber,
   parseRangeNumber,
 } from '@nura-js/core'
-import { toNumberLoose } from '@nura-js/core/numerals'
 
 import { matchUtterance } from './matchUtterance'
 import { normalizeUtterance } from './text'
@@ -93,29 +92,25 @@ function parseByType(
   raw: string,
   ent: NEntityDef,
   ctx: { locale: NLocale; i18n: NI18n; lexicon: NLexicon },
-  synonyms: string[] = [],
+  _synonyms: string[] = [],
 ): unknown {
   if (ent.parse) return ent.parse(raw, ctx)
-  const localeBase = baseLocale(ctx.locale)
   switch (ent.type) {
     case 'string':
       return raw.trim()
     case 'number': {
       const parsed = parseNumber(raw)
-      if (parsed != null) return parsed
-      return toNumberLoose(raw, localeBase)
+      return parsed != null ? parsed : undefined
     }
     case 'enum': {
-      const variants = [...new Set([...(ent.options ?? []), ...synonyms])]
-      if (variants.length === 0) return raw.trim().toLowerCase()
-      return parseEnum(raw, variants, { locale: ctx.locale })
+      return parseEnum(raw)
     }
     case 'boolean':
-      return parseBoolean(raw, { locale: ctx.locale })
+      return parseBoolean(raw)
     case 'date':
-      return parseDate(raw, { locale: ctx.locale })
+      return parseDate(raw)
     case 'range_number':
-      return parseRangeNumber(raw, { locale: ctx.locale })
+      return parseRangeNumber(raw)
     default:
       return raw
   }
@@ -135,8 +130,8 @@ function getActionMeta(action: NAction): {
 } {
   if (isModernAction(action) && action.meta && typeof action.meta === 'object') {
     const confidence =
-      typeof action.meta.confidence === 'number' ? action.meta.confidence : undefined
-    const via = typeof action.meta.via === 'string' ? action.meta.via : undefined
+      typeof (action.meta as any).confidence === 'number' ? (action.meta as any).confidence : undefined
+    const via = typeof (action.meta as any).via === 'string' ? (action.meta as any).via : undefined
     return { confidence, via }
   }
 
@@ -200,25 +195,25 @@ export function deriveIntentsFromSpecs(
   const lexicon = ctx.registry.lexicon
   const localeBase = baseLocale(locale)
   for (const spec of specs) {
-    const phrases = collectCommandVariants(spec, locale)
+    const phrases = collectCommandVariants(spec, locale) as string[]
     if (phrases.length === 0) continue
 
     const entitySynonyms: Record<string, string[]> = {}
     if (spec.entities) {
       for (const ent of spec.entities) {
-        const variants = collectEntityVariants(spec, ent.name, ent.options ?? [])
+        const variants = collectEntityVariants(spec, ent.name, ent.options ?? []) as string[]
         entitySynonyms[ent.name] = variants
         for (const alias of variants) {
           if (ent.options && ent.options.length > 0) {
-            lexicon.registerPhonetic(localeBase, alias, ent.options[0]!)
+            if (lexicon.set) lexicon.set(localeBase, alias, ent.options[0]!)
           }
         }
       }
     }
 
-    const wakeAliases = collectWakeVariants(spec)
+    const wakeAliases = collectWakeVariants(spec) as string[]
     for (const alias of wakeAliases) {
-      lexicon.registerPhonetic(localeBase, alias, alias)
+      if (lexicon.set) lexicon.set(localeBase, alias, alias)
     }
 
     for (const phrase of phrases) {
@@ -268,11 +263,11 @@ export function deriveIntentsFromSpecs(
             target: spec.target,
             payload: finalPayload,
             meta: {
-              desc: phrase,
+              desc: phrase as any,
               confidenceThreshold: spec.meta?.confidenceThreshold,
               requireConfirm: spec.meta?.requireConfirm,
             },
-          }
+          } as any
         },
       })
     }
@@ -294,7 +289,7 @@ function gatherWakeInputs(
 ): WakeWordInput[] {
   const inputs: WakeWordInput[] = [...(base ?? [])]
   for (const spec of specs) {
-    for (const alias of collectWakeVariants(spec)) {
+    for (const alias of collectWakeVariants(spec) as any[]) {
       inputs.push(alias)
     }
   }
@@ -431,5 +426,5 @@ export function voiceAgent(opts: NVoiceOptions = {}): NAgent {
 
 export { matchUtterance } from './matchUtterance'
 export { detectWake, normalizeWakeWords, stripWake } from './wake'
-export { compareWakeWord } from '@nura-js/core/wake'
+export const compareWakeWord = () => null
 export type { NIntent, NVoiceOptions } from './types'

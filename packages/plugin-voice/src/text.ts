@@ -17,7 +17,7 @@ export function normalizeUtterance(
   if (tokens.length === 0) return ''
   return tokens
     .map((tok) => {
-      const canonical = ctx.registry.lexicon.normalize(locale, tok) ?? tok
+      const canonical = ctx.registry.lexicon.get ? ctx.registry.lexicon.get(locale, tok) ?? tok : tok
       return stripDiacritics(canonical.toLowerCase())
     })
     .join(' ')

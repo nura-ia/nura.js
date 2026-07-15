@@ -1,17 +1,23 @@
 ## Summary
 
-<!-- Briefly describe the changes and the motivation. -->
+Describe the user or developer problem and the chosen solution.
 
-## Testing
+## Security boundary
 
-<!-- List the commands you ran and their results. -->
-- [ ] `pnpm -r build`
-- [ ] `pnpm -r test`
-- [ ] `pnpm -r lint`
+- [ ] No agent tool is exposed unintentionally.
+- [ ] Authorization is enforced through `Nura.act` or an equivalent trusted boundary.
+- [ ] Sensitive context and results are redacted or excluded.
+- [ ] Destructive or irreversible operations have an explicit approval path.
 
-## Checklist
+## Verification
 
-- [ ] Tests added or updated where appropriate
-- [ ] Documentation updated (README, docs, examples)
-- [ ] Changeset added if this change impacts published packages
-- [ ] No breaking changes or they are clearly documented
+- [ ] `pnpm typecheck`
+- [ ] `pnpm build`
+- [ ] `pnpm test`
+- [ ] `pnpm test:coverage` on Node.js 22+
+- [ ] `pnpm smoke`
+- [ ] Documentation and changeset updated when public behavior changes.
+
+## Compatibility
+
+List affected packages, runtimes, frameworks, and migration considerations.
