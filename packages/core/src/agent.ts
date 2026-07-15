@@ -528,12 +528,14 @@ function safeAttribute(element: Element, name: string): string | null {
 }
 
 function normalizeToolName(value: string): string {
-  const normalized = value
+  let result = value
     .trim()
     .replace(/[^a-zA-Z0-9_-]+/g, '_')
-    .replace(/^_+/, '')
-    .replace(/_+$/, '')
-    .slice(0, 64)
+
+  while (result.startsWith('_')) result = result.slice(1)
+  while (result.endsWith('_')) result = result.slice(0, -1)
+
+  const normalized = result.slice(0, 64)
   if (!normalized) return 'nura_action'
   return /^[a-zA-Z_]/.test(normalized)
     ? normalized
