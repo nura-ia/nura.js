@@ -47,7 +47,7 @@
   "dependencies": {
     "@nura-js/intents": "workspace:*",
     "express": "^4.19.2",
-    "express-rate-limit": "^8.5.2"
+    "express-rate-limit": "^8.6.0"
   },
   "engines": {
     "node": ">=18.18.0"
