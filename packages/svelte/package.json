@@ -50,7 +50,7 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "svelte": "^4.2.0",
-    "tsup": "^8.5.0",
+    "tsup": "^8.5.1",
     "typescript": "^5.5.0"
   },
   "engines": {
